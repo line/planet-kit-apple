@@ -102,7 +102,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		yanNxkNr2xt77TMLkPefXKkAFrE=
+		bbcIQ3CMdJx1hfE82sLaE9UMwvA=
 		</data>
 		<key>Modules/PlanetKit.swiftmodule/arm64-apple-tvos-simulator.abi.json</key>
 		<data>
@@ -122,7 +122,7 @@
 		</data>
 		<key>Modules/PlanetKit.swiftmodule/arm64-apple-tvos-simulator.swiftmodule</key>
 		<data>
-		7ryjpNZ2aaBiGz1lX1FLtZ3w6Fk=
+		mbxCc0ULZWge3cJw/1LOIGLq7GE=
 		</data>
 		<key>Modules/PlanetKit.swiftmodule/x86_64-apple-tvos-simulator.abi.json</key>
 		<data>
@@ -142,7 +142,7 @@
 		</data>
 		<key>Modules/PlanetKit.swiftmodule/x86_64-apple-tvos-simulator.swiftmodule</key>
 		<data>
-		dWjR4OHkx2hg4uqjvD6f9WRlUAY=
+		TBhKhNQijvB+13Iaq2w/4vXGuaA=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -359,7 +359,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			xU1VU+tKH58QQoU1xMZvgdWBMa8EcIN7Id2xENYNFUM=
+			apgGI3rki3Rfk23y/NttzcyC1uNPJF5TuW8hmWhI5L0=
 			</data>
 		</dict>
 		<key>Modules/PlanetKit.swiftmodule/x86_64-apple-tvos-simulator.abi.json</key>
@@ -394,7 +394,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Dz3p6/7Ya13LMiXXUVPXb8tOzNmDHYwJcVG5b5ZtNw0=
+			xBE8/vHy6kLvq8vDFY17OZLaA1Pa4v09hwEkpr9NfS4=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
