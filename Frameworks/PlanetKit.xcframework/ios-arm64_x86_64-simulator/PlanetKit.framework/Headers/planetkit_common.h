@@ -63,6 +63,10 @@ typedef struct planetkit_init_param {
     const char * NULLABLE sim_operator;               /**< MNC of SIM provider */
     const char * NULLABLE dev_radio_type;             /**< Device Radio Type */
 
+    const char * NULLABLE app_ver;                    /**< App version
+                                                       *   Maximum size of app_ver is 32 bytes including null termination
+                                                       *   Any trailing part of the string that exceeds the maximum size is discarded */
+
     planetkit_network_type_e   network_type;    /**< Radio technology (network type) currently in use on this device for data transmission */
     kit_bool_t  roaming;                        /**< Indicator that this device is in roaming network */
     int32_t     log_options;

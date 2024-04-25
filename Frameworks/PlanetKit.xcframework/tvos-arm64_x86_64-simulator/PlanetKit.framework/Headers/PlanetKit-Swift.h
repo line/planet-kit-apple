@@ -477,6 +477,7 @@ SWIFT_CLASS("_TtC9PlanetKit21PlanetKitAudioManager")
 - (void)playStopWithType:(NSString * _Nonnull)type;
 @end
 
+
 @protocol PlanetKitAudioMicCaptureDelegate;
 @protocol PlanetKitAudioSpkPlayDelegate;
 
@@ -667,6 +668,11 @@ SWIFT_CLASS("_TtC9PlanetKit20PlanetKitAudioMicSpk")
 @end
 
 
+@interface PlanetKitAudioMicSpk (SWIFT_EXTENSION(PlanetKit)) <PlanetAudioUnitTargetDelegate>
+- (int32_t)onFrames:(uint32_t)unitId frameNum:(uint32_t)frameNums format:(AudioStreamBasicDescription * _Null_unspecified)format timestamp:(AudioTimeStamp const * _Null_unspecified)timestamp buffer:(void * _Null_unspecified)aBuffer size:(uint32_t)aBufferSize SWIFT_WARN_UNUSED_RESULT;
+@end
+
+
 @interface PlanetKitAudioMicSpk (SWIFT_EXTENSION(PlanetKit)) <PlanetAudioPlayerDelegate>
 - (void)playDidFinish:(NSString * _Null_unspecified)type userData:(int32_t)userData;
 @end
@@ -677,8 +683,11 @@ SWIFT_CLASS("_TtC9PlanetKit20PlanetKitAudioMicSpk")
 @end
 
 
-@interface PlanetKitAudioMicSpk (SWIFT_EXTENSION(PlanetKit)) <PlanetAudioUnitTargetDelegate>
-- (int32_t)onFrames:(uint32_t)unitId frameNum:(uint32_t)frameNums format:(AudioStreamBasicDescription * _Null_unspecified)format timestamp:(AudioTimeStamp const * _Null_unspecified)timestamp buffer:(void * _Null_unspecified)aBuffer size:(uint32_t)aBufferSize SWIFT_WARN_UNUSED_RESULT;
+@interface PlanetKitAudioMicSpk (SWIFT_EXTENSION(PlanetKit))
+/// Adds a speaker receiver to receive a copy of rendered audio data.
+- (void)addSpkReceiver:(id <PlanetKitAudioSpkPlayDelegate> _Nonnull)spkDelegate;
+/// Removes the targeted speaker receiver.
+- (void)removeSpkReceiver:(id <PlanetKitAudioSpkPlayDelegate> _Nonnull)spkDelegate;
 @end
 
 
@@ -687,14 +696,6 @@ SWIFT_CLASS("_TtC9PlanetKit20PlanetKitAudioMicSpk")
 - (void)addMicReceiver:(id <PlanetKitAudioMicCaptureDelegate> _Nonnull)micReceiver;
 /// Removes the targeted microphone receiver.
 - (void)removeMicReceiver:(id <PlanetKitAudioMicCaptureDelegate> _Nonnull)micReceiver;
-@end
-
-
-@interface PlanetKitAudioMicSpk (SWIFT_EXTENSION(PlanetKit))
-/// Adds a speaker receiver to receive a copy of rendered audio data.
-- (void)addSpkReceiver:(id <PlanetKitAudioSpkPlayDelegate> _Nonnull)spkDelegate;
-/// Removes the targeted speaker receiver.
-- (void)removeSpkReceiver:(id <PlanetKitAudioSpkPlayDelegate> _Nonnull)spkDelegate;
 @end
 
 
@@ -825,13 +826,13 @@ SWIFT_CLASS("_TtC9PlanetKit17PlanetKitAudioSpk")
 @end
 
 
-@interface PlanetKitAudioSpk (SWIFT_EXTENSION(PlanetKit)) <PlanetAudioUnitSourceDelegate>
-- (int32_t)getFrame:(uint32_t)unitId frameNum:(uint32_t)frameNums format:(AudioStreamBasicDescription * _Null_unspecified)format timestamp:(AudioTimeStamp const * _Null_unspecified)timestamp buffer:(void * _Null_unspecified)aBuffer size:(uint32_t)aBufferSize SWIFT_WARN_UNUSED_RESULT;
+@interface PlanetKitAudioSpk (SWIFT_EXTENSION(PlanetKit)) <PlanetAudioPlayerDelegate>
+- (void)playDidFinish:(NSString * _Null_unspecified)type userData:(int32_t)userData;
 @end
 
 
-@interface PlanetKitAudioSpk (SWIFT_EXTENSION(PlanetKit)) <PlanetAudioPlayerDelegate>
-- (void)playDidFinish:(NSString * _Null_unspecified)type userData:(int32_t)userData;
+@interface PlanetKitAudioSpk (SWIFT_EXTENSION(PlanetKit)) <PlanetAudioUnitSourceDelegate>
+- (int32_t)getFrame:(uint32_t)unitId frameNum:(uint32_t)frameNums format:(AudioStreamBasicDescription * _Null_unspecified)format timestamp:(AudioTimeStamp const * _Null_unspecified)timestamp buffer:(void * _Null_unspecified)aBuffer size:(uint32_t)aBufferSize SWIFT_WARN_UNUSED_RESULT;
 @end
 
 
@@ -993,7 +994,6 @@ SWIFT_CLASS("_TtC9PlanetKit13PlanetKitCall")
 - (void)finishPreparation;
 @end
 
-
 @class NSData;
 
 @interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
@@ -1010,6 +1010,17 @@ SWIFT_CLASS("_TtC9PlanetKit13PlanetKitCall")
 /// \param completion Callback to be called when the peer received [data] successfully or failed
 ///
 - (void)sendShortDataWithType:(NSString * _Nonnull)type data:(NSData * _Nonnull)data completion:(void (^ _Nonnull)(BOOL))completion;
+@end
+
+
+
+@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit)) <PlanetKitAudioVolumeDelegate>
+- (void)didChangeVolume:(enum PlanetKitAudioDeviceType)type volume:(float)volume;
+@end
+
+
+@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit)) <PlanetKitAudioSpkPlayDelegate>
+- (int32_t)willPlayWithFrameCnt:(uint32_t)frameCnt channels:(uint32_t)channels sampleRate:(uint32_t)sampleRate sampleType:(enum PlanetKitAudioSampleType)sampleType timestamp:(AudioTimeStamp)timestamp playBuf:(void * _Null_unspecified)playBuf playBufSize:(uint32_t)playBufSize SWIFT_WARN_UNUSED_RESULT;
 @end
 
 @class PlanetKitVideoBuffer;
@@ -1032,17 +1043,18 @@ SWIFT_PROTOCOL("_TtP9PlanetKit28PlanetKitVideoOutputDelegate_")
 @end
 
 
-@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit)) <PlanetKitAudioSpkPlayDelegate>
-- (int32_t)willPlayWithFrameCnt:(uint32_t)frameCnt channels:(uint32_t)channels sampleRate:(uint32_t)sampleRate sampleType:(enum PlanetKitAudioSampleType)sampleType timestamp:(AudioTimeStamp)timestamp playBuf:(void * _Null_unspecified)playBuf playBufSize:(uint32_t)playBufSize SWIFT_WARN_UNUSED_RESULT;
+
+@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
+@property (nonatomic, readonly) BOOL isRecordOnCloudActivated;
 @end
 
 
-@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit)) <PlanetKitAudioVolumeDelegate>
-- (void)didChangeVolume:(enum PlanetKitAudioDeviceType)type volume:(float)volume;
+@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
+/// Starts the camera preview when the local user answers an incoming call.
+- (void)startPreview;
+/// Stops the camera preview.
+- (void)stopPreview;
 @end
-
-
-
 
 enum PlanetKitMediaDisableReason : NSInteger;
 
@@ -1050,6 +1062,9 @@ enum PlanetKitMediaDisableReason : NSInteger;
 - (void)enableVideoWithCompletion:(void (^ _Nonnull)(BOOL))completion;
 - (void)disableVideoWithReason:(enum PlanetKitMediaDisableReason)reason stopCamera:(BOOL)stopCamera completion:(void (^ _Nonnull)(BOOL))completion;
 @end
+
+
+
 
 
 @interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
@@ -1066,31 +1081,6 @@ enum PlanetKitMediaDisableReason : NSInteger;
 @end
 
 
-@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
-@property (nonatomic, readonly) BOOL isRecordOnCloudActivated;
-@end
-
-
-@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
-/// Starts the camera preview when the local user answers an incoming call.
-- (void)startPreview;
-/// Stops the camera preview.
-- (void)stopPreview;
-@end
-
-
-@class PlanetKitStatistics;
-
-SWIFT_PROTOCOL("_TtP9PlanetKit31PlanetKitStatisticsControllable_")
-@protocol PlanetKitStatisticsControllable
-@property (nonatomic, readonly, strong) PlanetKitStatistics * _Nullable statistics;
-@end
-
-
-@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit)) <PlanetKitStatisticsControllable>
-@property (nonatomic, readonly, strong) PlanetKitStatistics * _Nullable statistics;
-@end
-
 
 
 SWIFT_PROTOCOL("_TtP9PlanetKit29PlanetKitVideoLimiterDelegate_")
@@ -1105,12 +1095,17 @@ SWIFT_PROTOCOL("_TtP9PlanetKit29PlanetKitVideoLimiterDelegate_")
 - (BOOL)isVideoSendAvailable:(CMTime)timestamp SWIFT_WARN_UNUSED_RESULT;
 @end
 
+@class PlanetKitStatistics;
 
-@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
-- (BOOL)setMyScreenShareVideoShareModeWithEnable:(BOOL)enable SWIFT_WARN_UNUSED_RESULT;
-@property (nonatomic, readonly) BOOL isMyScreenShareVideoShareModeEnabled;
+SWIFT_PROTOCOL("_TtP9PlanetKit31PlanetKitStatisticsControllable_")
+@protocol PlanetKitStatisticsControllable
+@property (nonatomic, readonly, strong) PlanetKitStatistics * _Nullable statistics;
 @end
 
+
+@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit)) <PlanetKitStatisticsControllable>
+@property (nonatomic, readonly, strong) PlanetKitStatistics * _Nullable statistics;
+@end
 
 
 @interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
@@ -1127,6 +1122,14 @@ SWIFT_PROTOCOL("_TtP9PlanetKit29PlanetKitVideoLimiterDelegate_")
 /// Puts reference audio data for AEC.
 - (void)putUserAcousticEchoCancellerReferenceWithFrameCnt:(uint32_t)frameCnt channels:(uint32_t)channels sampleRate:(uint32_t)sampleRate sampleType:(enum PlanetKitAudioSampleType)sampleType outData:(void * _Null_unspecified)outData outDataLen:(uint32_t)outDataLen;
 @end
+
+
+@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
+- (BOOL)setMyScreenShareVideoShareModeWithEnable:(BOOL)enable SWIFT_WARN_UNUSED_RESULT;
+@property (nonatomic, readonly) BOOL isMyScreenShareVideoShareModeEnabled;
+@end
+
+
 
 
 
@@ -1193,7 +1196,6 @@ SWIFT_PROTOCOL("_TtP9PlanetKit32PlanetKitDataSessionControllable_")
 @end
 
 
-
 SWIFT_PROTOCOL("_TtP9PlanetKit35PlanetKitSharedContentsControllable_")
 @protocol PlanetKitSharedContentsControllable
 - (void)setSharedContentsWithData:(NSData * _Nonnull)data completion:(void (^ _Nonnull)(BOOL))completion;
@@ -1217,7 +1219,6 @@ SWIFT_PROTOCOL("_TtP9PlanetKit35PlanetKitSharedContentsControllable_")
 @end
 
 
-
 @interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
 - (void)pauseMyVideoWithCompletion:(void (^ _Nonnull)(BOOL))completion;
 - (void)resumeMyVideoWithCompletion:(void (^ _Nonnull)(BOOL))completion;
@@ -1225,6 +1226,7 @@ SWIFT_PROTOCOL("_TtP9PlanetKit35PlanetKitSharedContentsControllable_")
 /// Makes all peers’ voices silent by removing speaker output.
 - (void)silencePeerAudio:(BOOL)silent completion:(void (^ _Nonnull)(BOOL))completion;
 @end
+
 
 @class PlanetKitCallStartMessage;
 
@@ -1257,23 +1259,6 @@ SWIFT_PROTOCOL("_TtP9PlanetKit35PlanetKitSharedContentsControllable_")
 - (void)unholdWithCompletion:(void (^ _Nonnull)(BOOL))completion;
 @end
 
-@class PlanetKitVideoStatus;
-
-@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
-@property (nonatomic, readonly) BOOL isMyAudioMuted;
-@property (nonatomic, readonly) BOOL isPeerAudioMuted;
-@property (nonatomic, readonly) BOOL isPeerAudioSilenced;
-@property (nonatomic, readonly, strong) PlanetKitVideoStatus * _Nonnull myVideoStatus;
-@property (nonatomic, readonly) BOOL isMyVideoInterrupted;
-@property (nonatomic, readonly, strong) PlanetKitVideoStatus * _Nonnull peerVideoStatus;
-/// Gets the current hold state for audio/video.
-/// It will return <code>true</code> after <code>hold(reason:completion:)</code> is called, and <code>false</code> after <code>unhold(completion:)</code> is called.
-@property (nonatomic, readonly) BOOL isOnHold;
-/// Gets the call duration.
-/// If the duration is invalid, it returns -1.
-@property (nonatomic, readonly) NSTimeInterval duration;
-@end
-
 
 @interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
 - (void)startMyScreenShareWithCompletion:(void (^ _Nonnull)(BOOL))completion;
@@ -1289,6 +1274,23 @@ SWIFT_PROTOCOL("_TtP9PlanetKit35PlanetKitSharedContentsControllable_")
 @property (nonatomic, readonly) BOOL isMyScreenShared;
 @property (nonatomic, readonly) BOOL isPeerScreenShared;
 - (void)stopMyBroadcast;
+@end
+
+@class PlanetKitVideoStatus;
+
+@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
+@property (nonatomic, readonly) BOOL isMyAudioMuted;
+@property (nonatomic, readonly) BOOL isPeerAudioMuted;
+@property (nonatomic, readonly) BOOL isPeerAudioSilenced;
+@property (nonatomic, readonly, strong) PlanetKitVideoStatus * _Nonnull myVideoStatus;
+@property (nonatomic, readonly) BOOL isMyVideoInterrupted;
+@property (nonatomic, readonly, strong) PlanetKitVideoStatus * _Nonnull peerVideoStatus;
+/// Gets the current hold state for audio/video.
+/// It will return <code>true</code> after <code>hold(reason:completion:)</code> is called, and <code>false</code> after <code>unhold(completion:)</code> is called.
+@property (nonatomic, readonly) BOOL isOnHold;
+/// Gets the call duration.
+/// If the duration is invalid, it returns -1.
+@property (nonatomic, readonly) NSTimeInterval duration;
 @end
 
 
@@ -1474,7 +1476,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isCameraAvailab
 
 
 
-
 @interface PlanetKitCamera (SWIFT_EXTENSION(PlanetKit))
 /// remark:
 ///
@@ -1487,6 +1488,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isCameraAvailab
 /// </ul>
 + (BOOL)canSupportVideoSettings:(OSType)pixelFormat SWIFT_WARN_UNUSED_RESULT;
 @end
+
 
 @protocol PlanetKitCameraDeviceChangeDelegate;
 
@@ -1673,6 +1675,11 @@ SWIFT_CLASS("_TtC9PlanetKit19PlanetKitConference")
 
 
 
+@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit)) <PlanetKitAudioVolumeDelegate>
+- (void)didChangeVolume:(enum PlanetKitAudioDeviceType)type volume:(float)volume;
+@end
+
+
 @interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit)) <PlanetKitVideoOutputDelegate>
 /// Implements the <code>PlanetKitVideoOutputDelegate</code> to send video data to a conference.
 /// Do not call this function unless you have to handle cam output instead of PlanetKit.
@@ -1694,9 +1701,36 @@ SWIFT_CLASS("_TtC9PlanetKit19PlanetKitConference")
 @end
 
 
-@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit)) <PlanetKitAudioVolumeDelegate>
-- (void)didChangeVolume:(enum PlanetKitAudioDeviceType)type volume:(float)volume;
+
+@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
+- (void)enableVideoWithCompletion:(void (^ _Nonnull)(BOOL))completion;
+- (void)disableVideoWithReason:(enum PlanetKitMediaDisableReason)reason stopCamera:(BOOL)stopCamera completion:(void (^ _Nonnull)(BOOL))completion;
 @end
+
+
+@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
+/// Requests a targeted peer to mute or unmute audio.
+- (void)requestPeerMute:(BOOL)mute peerId:(PlanetKitUserId * _Nonnull)peerId completion:(void (^ _Nonnull)(BOOL))completion;
+/// Requests all peers to mute or unmute audio.
+- (void)requestPeersMute:(BOOL)mute completion:(void (^ _Nonnull)(BOOL))completion;
+@end
+
+
+@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
+/// Starts the camera preview when the local user answers an incoming call.
+- (void)startPreview;
+/// Stops the camera preview.
+- (void)stopPreview;
+@end
+
+
+@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
+/// Checks if the peer is the local user.
+- (BOOL)isMeWithPeer:(PlanetKitConferencePeer * _Nonnull)peer SWIFT_WARN_UNUSED_RESULT;
+/// Gets a peer object from the main room.
+- (PlanetKitConferencePeer * _Nullable)getPeerWithPeerId:(PlanetKitUserId * _Nonnull)peerId SWIFT_WARN_UNUSED_RESULT;
+@end
+
 
 
 
@@ -1715,69 +1749,15 @@ SWIFT_CLASS("_TtC9PlanetKit19PlanetKitConference")
 @end
 
 
-@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
-/// Requests a targeted peer to mute or unmute audio.
-- (void)requestPeerMute:(BOOL)mute peerId:(PlanetKitUserId * _Nonnull)peerId completion:(void (^ _Nonnull)(BOOL))completion;
-/// Requests all peers to mute or unmute audio.
-- (void)requestPeersMute:(BOOL)mute completion:(void (^ _Nonnull)(BOOL))completion;
-@end
-
-
-
-@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
-/// Checks if the peer is the local user.
-- (BOOL)isMeWithPeer:(PlanetKitConferencePeer * _Nonnull)peer SWIFT_WARN_UNUSED_RESULT;
-/// Gets a peer object from the main room.
-- (PlanetKitConferencePeer * _Nullable)getPeerWithPeerId:(PlanetKitUserId * _Nonnull)peerId SWIFT_WARN_UNUSED_RESULT;
-@end
-
-
-@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
-- (void)enableVideoWithCompletion:(void (^ _Nonnull)(BOOL))completion;
-- (void)disableVideoWithReason:(enum PlanetKitMediaDisableReason)reason stopCamera:(BOOL)stopCamera completion:(void (^ _Nonnull)(BOOL))completion;
-@end
-
-
-@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
-/// Starts the camera preview when the local user answers an incoming call.
-- (void)startPreview;
-/// Stops the camera preview.
-- (void)stopPreview;
-@end
-
-
-
 @interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit)) <PlanetKitStatisticsControllable>
 @property (nonatomic, readonly, strong) PlanetKitStatistics * _Nullable statistics;
 @end
 
 
+
 @interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit)) <PlanetKitVideoLimiterDelegate>
 - (BOOL)isScreenShareSendAvailable:(CMTime)timestamp SWIFT_WARN_UNUSED_RESULT;
 - (BOOL)isVideoSendAvailable:(CMTime)timestamp SWIFT_WARN_UNUSED_RESULT;
-@end
-
-
-
-@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
-/// Starts the use of the user’s reference audio data for AEC to resolve echo.
-/// remark:
-///
-/// To resolve echo using the user’s reference data, you should provide reference data using <code>PlanetKitConference.putUserAcousticEchoCancellerReference(frameCnt:...)</code> after calling this function.
-- (void)startUserAcousticEchoCancellerReference:(void (^ _Nonnull)(BOOL))completion;
-/// Stops the use of the user’s reference audio data for AEC to resolve echo.
-/// remark:
-///
-/// You should call this function to stop putting reference audio data for AEC.
-- (void)stopUserAcousticEchoCancellerReference:(void (^ _Nonnull)(BOOL))completion;
-/// Puts reference audio data for AEC.
-- (void)putUserAcousticEchoCancellerReferenceWithFrameCnt:(uint32_t)frameCnt channels:(uint32_t)channels sampleRate:(uint32_t)sampleRate sampleType:(enum PlanetKitAudioSampleType)sampleType outData:(void * _Null_unspecified)outData outDataLen:(uint32_t)outDataLen;
-@end
-
-
-@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
-- (BOOL)setMyScreenShareVideoShareModeWithEnable:(BOOL)enable SWIFT_WARN_UNUSED_RESULT;
-@property (nonatomic, readonly) BOOL isMyScreenShareVideoShareModeEnabled;
 @end
 
 
@@ -1811,10 +1791,35 @@ SWIFT_CLASS("_TtC9PlanetKit19PlanetKitConference")
 @end
 
 
+
+@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
+/// Starts the use of the user’s reference audio data for AEC to resolve echo.
+/// remark:
+///
+/// To resolve echo using the user’s reference data, you should provide reference data using <code>PlanetKitConference.putUserAcousticEchoCancellerReference(frameCnt:...)</code> after calling this function.
+- (void)startUserAcousticEchoCancellerReference:(void (^ _Nonnull)(BOOL))completion;
+/// Stops the use of the user’s reference audio data for AEC to resolve echo.
+/// remark:
+///
+/// You should call this function to stop putting reference audio data for AEC.
+- (void)stopUserAcousticEchoCancellerReference:(void (^ _Nonnull)(BOOL))completion;
+/// Puts reference audio data for AEC.
+- (void)putUserAcousticEchoCancellerReferenceWithFrameCnt:(uint32_t)frameCnt channels:(uint32_t)channels sampleRate:(uint32_t)sampleRate sampleType:(enum PlanetKitAudioSampleType)sampleType outData:(void * _Null_unspecified)outData outDataLen:(uint32_t)outDataLen;
+@end
+
+
+@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
+- (BOOL)setMyScreenShareVideoShareModeWithEnable:(BOOL)enable SWIFT_WARN_UNUSED_RESULT;
+@property (nonatomic, readonly) BOOL isMyScreenShareVideoShareModeEnabled;
+@end
+
+
 @interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit)) <PlanetKitDebugMonitor>
 /// Gets the monitoring information string.
 - (NSString * _Nonnull)getMonitorInfo SWIFT_WARN_UNUSED_RESULT;
 @end
+
+
 
 
 
@@ -1832,8 +1837,6 @@ SWIFT_CLASS("_TtC9PlanetKit19PlanetKitConference")
 /// If the current peer screen share received count is equal to the maximum count, a new <code>requestPeerScreenShare(peerId:subgroupName:completion)</code> will fail.
 @property (nonatomic, readonly) NSInteger peersScreenShareMaxCount;
 @end
-
-
 
 
 enum PlanetKitVideoResolution : NSInteger;
@@ -1861,6 +1864,16 @@ enum PlanetKitVideoResolution : NSInteger;
 @end
 
 
+
+@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
+- (void)requestPeerScreenShareWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName completion:(void (^ _Nonnull)(BOOL))completion;
+- (void)stopPeerScreenShareWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName completion:(void (^ _Nonnull)(BOOL))completion;
+- (void)addPeerScreenShareViewWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName delegate:(id <PlanetKitVideoOutputDelegate> _Nonnull)delegate;
+- (void)removePeerScreenShareViewWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName delegate:(id <PlanetKitVideoOutputDelegate> _Nonnull)delegate;
+- (void)removeAllPeerScreenShareViewWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName;
+- (NSArray<id <PlanetKitVideoOutputDelegate>> * _Nullable)getPeerScreenShareViewsWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName SWIFT_WARN_UNUSED_RESULT;
+@end
+
 enum PlanetKitUserEquipmentType : NSInteger;
 
 @interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
@@ -1876,16 +1889,6 @@ enum PlanetKitUserEquipmentType : NSInteger;
 /// Gets the call duration.
 /// If the duration is invalid, it returns -1.
 @property (nonatomic, readonly) NSTimeInterval duration;
-@end
-
-
-@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
-- (void)requestPeerScreenShareWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName completion:(void (^ _Nonnull)(BOOL))completion;
-- (void)stopPeerScreenShareWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName completion:(void (^ _Nonnull)(BOOL))completion;
-- (void)addPeerScreenShareViewWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName delegate:(id <PlanetKitVideoOutputDelegate> _Nonnull)delegate;
-- (void)removePeerScreenShareViewWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName delegate:(id <PlanetKitVideoOutputDelegate> _Nonnull)delegate;
-- (void)removeAllPeerScreenShareViewWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName;
-- (NSArray<id <PlanetKitVideoOutputDelegate>> * _Nullable)getPeerScreenShareViewsWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName SWIFT_WARN_UNUSED_RESULT;
 @end
 
 
@@ -1916,7 +1919,6 @@ enum PlanetKitUserEquipmentType : NSInteger;
 /// Unholds the conference to resume.
 - (void)unholdWithCompletion:(void (^ _Nonnull)(BOOL))completion;
 @end
-
 
 @class PlanetKitPeerControl;
 
@@ -1955,6 +1957,7 @@ enum PlanetKitUserEquipmentType : NSInteger;
 /// Gets the existing inbound data session with the stream ID.
 - (PlanetKitInboundDataSession * _Nullable)getInboundDataSessionWithStreamId:(uint32_t)streamId SWIFT_WARN_UNUSED_RESULT;
 @end
+
 
 
 @interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
@@ -2897,6 +2900,7 @@ enum PlanetKitVideoHardwareStatus : NSInteger;
 @property (nonatomic, readonly) enum PlanetKitVideoHardwareStatus canSupportVideoHardware;
 @property (nonatomic, readonly) BOOL canSupportVideoHardwareCodec;
 @end
+
 
 
 @interface PlanetKitManager (SWIFT_EXTENSION(PlanetKit))
@@ -4437,6 +4441,7 @@ SWIFT_CLASS("_TtC9PlanetKit21PlanetKitAudioManager")
 - (void)playStopWithType:(NSString * _Nonnull)type;
 @end
 
+
 @protocol PlanetKitAudioMicCaptureDelegate;
 @protocol PlanetKitAudioSpkPlayDelegate;
 
@@ -4627,6 +4632,11 @@ SWIFT_CLASS("_TtC9PlanetKit20PlanetKitAudioMicSpk")
 @end
 
 
+@interface PlanetKitAudioMicSpk (SWIFT_EXTENSION(PlanetKit)) <PlanetAudioUnitTargetDelegate>
+- (int32_t)onFrames:(uint32_t)unitId frameNum:(uint32_t)frameNums format:(AudioStreamBasicDescription * _Null_unspecified)format timestamp:(AudioTimeStamp const * _Null_unspecified)timestamp buffer:(void * _Null_unspecified)aBuffer size:(uint32_t)aBufferSize SWIFT_WARN_UNUSED_RESULT;
+@end
+
+
 @interface PlanetKitAudioMicSpk (SWIFT_EXTENSION(PlanetKit)) <PlanetAudioPlayerDelegate>
 - (void)playDidFinish:(NSString * _Null_unspecified)type userData:(int32_t)userData;
 @end
@@ -4637,8 +4647,11 @@ SWIFT_CLASS("_TtC9PlanetKit20PlanetKitAudioMicSpk")
 @end
 
 
-@interface PlanetKitAudioMicSpk (SWIFT_EXTENSION(PlanetKit)) <PlanetAudioUnitTargetDelegate>
-- (int32_t)onFrames:(uint32_t)unitId frameNum:(uint32_t)frameNums format:(AudioStreamBasicDescription * _Null_unspecified)format timestamp:(AudioTimeStamp const * _Null_unspecified)timestamp buffer:(void * _Null_unspecified)aBuffer size:(uint32_t)aBufferSize SWIFT_WARN_UNUSED_RESULT;
+@interface PlanetKitAudioMicSpk (SWIFT_EXTENSION(PlanetKit))
+/// Adds a speaker receiver to receive a copy of rendered audio data.
+- (void)addSpkReceiver:(id <PlanetKitAudioSpkPlayDelegate> _Nonnull)spkDelegate;
+/// Removes the targeted speaker receiver.
+- (void)removeSpkReceiver:(id <PlanetKitAudioSpkPlayDelegate> _Nonnull)spkDelegate;
 @end
 
 
@@ -4647,14 +4660,6 @@ SWIFT_CLASS("_TtC9PlanetKit20PlanetKitAudioMicSpk")
 - (void)addMicReceiver:(id <PlanetKitAudioMicCaptureDelegate> _Nonnull)micReceiver;
 /// Removes the targeted microphone receiver.
 - (void)removeMicReceiver:(id <PlanetKitAudioMicCaptureDelegate> _Nonnull)micReceiver;
-@end
-
-
-@interface PlanetKitAudioMicSpk (SWIFT_EXTENSION(PlanetKit))
-/// Adds a speaker receiver to receive a copy of rendered audio data.
-- (void)addSpkReceiver:(id <PlanetKitAudioSpkPlayDelegate> _Nonnull)spkDelegate;
-/// Removes the targeted speaker receiver.
-- (void)removeSpkReceiver:(id <PlanetKitAudioSpkPlayDelegate> _Nonnull)spkDelegate;
 @end
 
 
@@ -4785,13 +4790,13 @@ SWIFT_CLASS("_TtC9PlanetKit17PlanetKitAudioSpk")
 @end
 
 
-@interface PlanetKitAudioSpk (SWIFT_EXTENSION(PlanetKit)) <PlanetAudioUnitSourceDelegate>
-- (int32_t)getFrame:(uint32_t)unitId frameNum:(uint32_t)frameNums format:(AudioStreamBasicDescription * _Null_unspecified)format timestamp:(AudioTimeStamp const * _Null_unspecified)timestamp buffer:(void * _Null_unspecified)aBuffer size:(uint32_t)aBufferSize SWIFT_WARN_UNUSED_RESULT;
+@interface PlanetKitAudioSpk (SWIFT_EXTENSION(PlanetKit)) <PlanetAudioPlayerDelegate>
+- (void)playDidFinish:(NSString * _Null_unspecified)type userData:(int32_t)userData;
 @end
 
 
-@interface PlanetKitAudioSpk (SWIFT_EXTENSION(PlanetKit)) <PlanetAudioPlayerDelegate>
-- (void)playDidFinish:(NSString * _Null_unspecified)type userData:(int32_t)userData;
+@interface PlanetKitAudioSpk (SWIFT_EXTENSION(PlanetKit)) <PlanetAudioUnitSourceDelegate>
+- (int32_t)getFrame:(uint32_t)unitId frameNum:(uint32_t)frameNums format:(AudioStreamBasicDescription * _Null_unspecified)format timestamp:(AudioTimeStamp const * _Null_unspecified)timestamp buffer:(void * _Null_unspecified)aBuffer size:(uint32_t)aBufferSize SWIFT_WARN_UNUSED_RESULT;
 @end
 
 
@@ -4953,7 +4958,6 @@ SWIFT_CLASS("_TtC9PlanetKit13PlanetKitCall")
 - (void)finishPreparation;
 @end
 
-
 @class NSData;
 
 @interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
@@ -4970,6 +4974,17 @@ SWIFT_CLASS("_TtC9PlanetKit13PlanetKitCall")
 /// \param completion Callback to be called when the peer received [data] successfully or failed
 ///
 - (void)sendShortDataWithType:(NSString * _Nonnull)type data:(NSData * _Nonnull)data completion:(void (^ _Nonnull)(BOOL))completion;
+@end
+
+
+
+@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit)) <PlanetKitAudioVolumeDelegate>
+- (void)didChangeVolume:(enum PlanetKitAudioDeviceType)type volume:(float)volume;
+@end
+
+
+@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit)) <PlanetKitAudioSpkPlayDelegate>
+- (int32_t)willPlayWithFrameCnt:(uint32_t)frameCnt channels:(uint32_t)channels sampleRate:(uint32_t)sampleRate sampleType:(enum PlanetKitAudioSampleType)sampleType timestamp:(AudioTimeStamp)timestamp playBuf:(void * _Null_unspecified)playBuf playBufSize:(uint32_t)playBufSize SWIFT_WARN_UNUSED_RESULT;
 @end
 
 @class PlanetKitVideoBuffer;
@@ -4992,17 +5007,18 @@ SWIFT_PROTOCOL("_TtP9PlanetKit28PlanetKitVideoOutputDelegate_")
 @end
 
 
-@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit)) <PlanetKitAudioSpkPlayDelegate>
-- (int32_t)willPlayWithFrameCnt:(uint32_t)frameCnt channels:(uint32_t)channels sampleRate:(uint32_t)sampleRate sampleType:(enum PlanetKitAudioSampleType)sampleType timestamp:(AudioTimeStamp)timestamp playBuf:(void * _Null_unspecified)playBuf playBufSize:(uint32_t)playBufSize SWIFT_WARN_UNUSED_RESULT;
+
+@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
+@property (nonatomic, readonly) BOOL isRecordOnCloudActivated;
 @end
 
 
-@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit)) <PlanetKitAudioVolumeDelegate>
-- (void)didChangeVolume:(enum PlanetKitAudioDeviceType)type volume:(float)volume;
+@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
+/// Starts the camera preview when the local user answers an incoming call.
+- (void)startPreview;
+/// Stops the camera preview.
+- (void)stopPreview;
 @end
-
-
-
 
 enum PlanetKitMediaDisableReason : NSInteger;
 
@@ -5010,6 +5026,9 @@ enum PlanetKitMediaDisableReason : NSInteger;
 - (void)enableVideoWithCompletion:(void (^ _Nonnull)(BOOL))completion;
 - (void)disableVideoWithReason:(enum PlanetKitMediaDisableReason)reason stopCamera:(BOOL)stopCamera completion:(void (^ _Nonnull)(BOOL))completion;
 @end
+
+
+
 
 
 @interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
@@ -5026,31 +5045,6 @@ enum PlanetKitMediaDisableReason : NSInteger;
 @end
 
 
-@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
-@property (nonatomic, readonly) BOOL isRecordOnCloudActivated;
-@end
-
-
-@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
-/// Starts the camera preview when the local user answers an incoming call.
-- (void)startPreview;
-/// Stops the camera preview.
-- (void)stopPreview;
-@end
-
-
-@class PlanetKitStatistics;
-
-SWIFT_PROTOCOL("_TtP9PlanetKit31PlanetKitStatisticsControllable_")
-@protocol PlanetKitStatisticsControllable
-@property (nonatomic, readonly, strong) PlanetKitStatistics * _Nullable statistics;
-@end
-
-
-@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit)) <PlanetKitStatisticsControllable>
-@property (nonatomic, readonly, strong) PlanetKitStatistics * _Nullable statistics;
-@end
-
 
 
 SWIFT_PROTOCOL("_TtP9PlanetKit29PlanetKitVideoLimiterDelegate_")
@@ -5065,12 +5059,17 @@ SWIFT_PROTOCOL("_TtP9PlanetKit29PlanetKitVideoLimiterDelegate_")
 - (BOOL)isVideoSendAvailable:(CMTime)timestamp SWIFT_WARN_UNUSED_RESULT;
 @end
 
+@class PlanetKitStatistics;
 
-@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
-- (BOOL)setMyScreenShareVideoShareModeWithEnable:(BOOL)enable SWIFT_WARN_UNUSED_RESULT;
-@property (nonatomic, readonly) BOOL isMyScreenShareVideoShareModeEnabled;
+SWIFT_PROTOCOL("_TtP9PlanetKit31PlanetKitStatisticsControllable_")
+@protocol PlanetKitStatisticsControllable
+@property (nonatomic, readonly, strong) PlanetKitStatistics * _Nullable statistics;
 @end
 
+
+@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit)) <PlanetKitStatisticsControllable>
+@property (nonatomic, readonly, strong) PlanetKitStatistics * _Nullable statistics;
+@end
 
 
 @interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
@@ -5087,6 +5086,14 @@ SWIFT_PROTOCOL("_TtP9PlanetKit29PlanetKitVideoLimiterDelegate_")
 /// Puts reference audio data for AEC.
 - (void)putUserAcousticEchoCancellerReferenceWithFrameCnt:(uint32_t)frameCnt channels:(uint32_t)channels sampleRate:(uint32_t)sampleRate sampleType:(enum PlanetKitAudioSampleType)sampleType outData:(void * _Null_unspecified)outData outDataLen:(uint32_t)outDataLen;
 @end
+
+
+@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
+- (BOOL)setMyScreenShareVideoShareModeWithEnable:(BOOL)enable SWIFT_WARN_UNUSED_RESULT;
+@property (nonatomic, readonly) BOOL isMyScreenShareVideoShareModeEnabled;
+@end
+
+
 
 
 
@@ -5153,7 +5160,6 @@ SWIFT_PROTOCOL("_TtP9PlanetKit32PlanetKitDataSessionControllable_")
 @end
 
 
-
 SWIFT_PROTOCOL("_TtP9PlanetKit35PlanetKitSharedContentsControllable_")
 @protocol PlanetKitSharedContentsControllable
 - (void)setSharedContentsWithData:(NSData * _Nonnull)data completion:(void (^ _Nonnull)(BOOL))completion;
@@ -5177,7 +5183,6 @@ SWIFT_PROTOCOL("_TtP9PlanetKit35PlanetKitSharedContentsControllable_")
 @end
 
 
-
 @interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
 - (void)pauseMyVideoWithCompletion:(void (^ _Nonnull)(BOOL))completion;
 - (void)resumeMyVideoWithCompletion:(void (^ _Nonnull)(BOOL))completion;
@@ -5185,6 +5190,7 @@ SWIFT_PROTOCOL("_TtP9PlanetKit35PlanetKitSharedContentsControllable_")
 /// Makes all peers’ voices silent by removing speaker output.
 - (void)silencePeerAudio:(BOOL)silent completion:(void (^ _Nonnull)(BOOL))completion;
 @end
+
 
 @class PlanetKitCallStartMessage;
 
@@ -5217,23 +5223,6 @@ SWIFT_PROTOCOL("_TtP9PlanetKit35PlanetKitSharedContentsControllable_")
 - (void)unholdWithCompletion:(void (^ _Nonnull)(BOOL))completion;
 @end
 
-@class PlanetKitVideoStatus;
-
-@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
-@property (nonatomic, readonly) BOOL isMyAudioMuted;
-@property (nonatomic, readonly) BOOL isPeerAudioMuted;
-@property (nonatomic, readonly) BOOL isPeerAudioSilenced;
-@property (nonatomic, readonly, strong) PlanetKitVideoStatus * _Nonnull myVideoStatus;
-@property (nonatomic, readonly) BOOL isMyVideoInterrupted;
-@property (nonatomic, readonly, strong) PlanetKitVideoStatus * _Nonnull peerVideoStatus;
-/// Gets the current hold state for audio/video.
-/// It will return <code>true</code> after <code>hold(reason:completion:)</code> is called, and <code>false</code> after <code>unhold(completion:)</code> is called.
-@property (nonatomic, readonly) BOOL isOnHold;
-/// Gets the call duration.
-/// If the duration is invalid, it returns -1.
-@property (nonatomic, readonly) NSTimeInterval duration;
-@end
-
 
 @interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
 - (void)startMyScreenShareWithCompletion:(void (^ _Nonnull)(BOOL))completion;
@@ -5249,6 +5238,23 @@ SWIFT_PROTOCOL("_TtP9PlanetKit35PlanetKitSharedContentsControllable_")
 @property (nonatomic, readonly) BOOL isMyScreenShared;
 @property (nonatomic, readonly) BOOL isPeerScreenShared;
 - (void)stopMyBroadcast;
+@end
+
+@class PlanetKitVideoStatus;
+
+@interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit))
+@property (nonatomic, readonly) BOOL isMyAudioMuted;
+@property (nonatomic, readonly) BOOL isPeerAudioMuted;
+@property (nonatomic, readonly) BOOL isPeerAudioSilenced;
+@property (nonatomic, readonly, strong) PlanetKitVideoStatus * _Nonnull myVideoStatus;
+@property (nonatomic, readonly) BOOL isMyVideoInterrupted;
+@property (nonatomic, readonly, strong) PlanetKitVideoStatus * _Nonnull peerVideoStatus;
+/// Gets the current hold state for audio/video.
+/// It will return <code>true</code> after <code>hold(reason:completion:)</code> is called, and <code>false</code> after <code>unhold(completion:)</code> is called.
+@property (nonatomic, readonly) BOOL isOnHold;
+/// Gets the call duration.
+/// If the duration is invalid, it returns -1.
+@property (nonatomic, readonly) NSTimeInterval duration;
 @end
 
 
@@ -5434,7 +5440,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isCameraAvailab
 
 
 
-
 @interface PlanetKitCamera (SWIFT_EXTENSION(PlanetKit))
 /// remark:
 ///
@@ -5447,6 +5452,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isCameraAvailab
 /// </ul>
 + (BOOL)canSupportVideoSettings:(OSType)pixelFormat SWIFT_WARN_UNUSED_RESULT;
 @end
+
 
 @protocol PlanetKitCameraDeviceChangeDelegate;
 
@@ -5633,6 +5639,11 @@ SWIFT_CLASS("_TtC9PlanetKit19PlanetKitConference")
 
 
 
+@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit)) <PlanetKitAudioVolumeDelegate>
+- (void)didChangeVolume:(enum PlanetKitAudioDeviceType)type volume:(float)volume;
+@end
+
+
 @interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit)) <PlanetKitVideoOutputDelegate>
 /// Implements the <code>PlanetKitVideoOutputDelegate</code> to send video data to a conference.
 /// Do not call this function unless you have to handle cam output instead of PlanetKit.
@@ -5654,9 +5665,36 @@ SWIFT_CLASS("_TtC9PlanetKit19PlanetKitConference")
 @end
 
 
-@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit)) <PlanetKitAudioVolumeDelegate>
-- (void)didChangeVolume:(enum PlanetKitAudioDeviceType)type volume:(float)volume;
+
+@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
+- (void)enableVideoWithCompletion:(void (^ _Nonnull)(BOOL))completion;
+- (void)disableVideoWithReason:(enum PlanetKitMediaDisableReason)reason stopCamera:(BOOL)stopCamera completion:(void (^ _Nonnull)(BOOL))completion;
 @end
+
+
+@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
+/// Requests a targeted peer to mute or unmute audio.
+- (void)requestPeerMute:(BOOL)mute peerId:(PlanetKitUserId * _Nonnull)peerId completion:(void (^ _Nonnull)(BOOL))completion;
+/// Requests all peers to mute or unmute audio.
+- (void)requestPeersMute:(BOOL)mute completion:(void (^ _Nonnull)(BOOL))completion;
+@end
+
+
+@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
+/// Starts the camera preview when the local user answers an incoming call.
+- (void)startPreview;
+/// Stops the camera preview.
+- (void)stopPreview;
+@end
+
+
+@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
+/// Checks if the peer is the local user.
+- (BOOL)isMeWithPeer:(PlanetKitConferencePeer * _Nonnull)peer SWIFT_WARN_UNUSED_RESULT;
+/// Gets a peer object from the main room.
+- (PlanetKitConferencePeer * _Nullable)getPeerWithPeerId:(PlanetKitUserId * _Nonnull)peerId SWIFT_WARN_UNUSED_RESULT;
+@end
+
 
 
 
@@ -5675,69 +5713,15 @@ SWIFT_CLASS("_TtC9PlanetKit19PlanetKitConference")
 @end
 
 
-@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
-/// Requests a targeted peer to mute or unmute audio.
-- (void)requestPeerMute:(BOOL)mute peerId:(PlanetKitUserId * _Nonnull)peerId completion:(void (^ _Nonnull)(BOOL))completion;
-/// Requests all peers to mute or unmute audio.
-- (void)requestPeersMute:(BOOL)mute completion:(void (^ _Nonnull)(BOOL))completion;
-@end
-
-
-
-@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
-/// Checks if the peer is the local user.
-- (BOOL)isMeWithPeer:(PlanetKitConferencePeer * _Nonnull)peer SWIFT_WARN_UNUSED_RESULT;
-/// Gets a peer object from the main room.
-- (PlanetKitConferencePeer * _Nullable)getPeerWithPeerId:(PlanetKitUserId * _Nonnull)peerId SWIFT_WARN_UNUSED_RESULT;
-@end
-
-
-@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
-- (void)enableVideoWithCompletion:(void (^ _Nonnull)(BOOL))completion;
-- (void)disableVideoWithReason:(enum PlanetKitMediaDisableReason)reason stopCamera:(BOOL)stopCamera completion:(void (^ _Nonnull)(BOOL))completion;
-@end
-
-
-@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
-/// Starts the camera preview when the local user answers an incoming call.
-- (void)startPreview;
-/// Stops the camera preview.
-- (void)stopPreview;
-@end
-
-
-
 @interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit)) <PlanetKitStatisticsControllable>
 @property (nonatomic, readonly, strong) PlanetKitStatistics * _Nullable statistics;
 @end
 
 
+
 @interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit)) <PlanetKitVideoLimiterDelegate>
 - (BOOL)isScreenShareSendAvailable:(CMTime)timestamp SWIFT_WARN_UNUSED_RESULT;
 - (BOOL)isVideoSendAvailable:(CMTime)timestamp SWIFT_WARN_UNUSED_RESULT;
-@end
-
-
-
-@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
-/// Starts the use of the user’s reference audio data for AEC to resolve echo.
-/// remark:
-///
-/// To resolve echo using the user’s reference data, you should provide reference data using <code>PlanetKitConference.putUserAcousticEchoCancellerReference(frameCnt:...)</code> after calling this function.
-- (void)startUserAcousticEchoCancellerReference:(void (^ _Nonnull)(BOOL))completion;
-/// Stops the use of the user’s reference audio data for AEC to resolve echo.
-/// remark:
-///
-/// You should call this function to stop putting reference audio data for AEC.
-- (void)stopUserAcousticEchoCancellerReference:(void (^ _Nonnull)(BOOL))completion;
-/// Puts reference audio data for AEC.
-- (void)putUserAcousticEchoCancellerReferenceWithFrameCnt:(uint32_t)frameCnt channels:(uint32_t)channels sampleRate:(uint32_t)sampleRate sampleType:(enum PlanetKitAudioSampleType)sampleType outData:(void * _Null_unspecified)outData outDataLen:(uint32_t)outDataLen;
-@end
-
-
-@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
-- (BOOL)setMyScreenShareVideoShareModeWithEnable:(BOOL)enable SWIFT_WARN_UNUSED_RESULT;
-@property (nonatomic, readonly) BOOL isMyScreenShareVideoShareModeEnabled;
 @end
 
 
@@ -5771,10 +5755,35 @@ SWIFT_CLASS("_TtC9PlanetKit19PlanetKitConference")
 @end
 
 
+
+@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
+/// Starts the use of the user’s reference audio data for AEC to resolve echo.
+/// remark:
+///
+/// To resolve echo using the user’s reference data, you should provide reference data using <code>PlanetKitConference.putUserAcousticEchoCancellerReference(frameCnt:...)</code> after calling this function.
+- (void)startUserAcousticEchoCancellerReference:(void (^ _Nonnull)(BOOL))completion;
+/// Stops the use of the user’s reference audio data for AEC to resolve echo.
+/// remark:
+///
+/// You should call this function to stop putting reference audio data for AEC.
+- (void)stopUserAcousticEchoCancellerReference:(void (^ _Nonnull)(BOOL))completion;
+/// Puts reference audio data for AEC.
+- (void)putUserAcousticEchoCancellerReferenceWithFrameCnt:(uint32_t)frameCnt channels:(uint32_t)channels sampleRate:(uint32_t)sampleRate sampleType:(enum PlanetKitAudioSampleType)sampleType outData:(void * _Null_unspecified)outData outDataLen:(uint32_t)outDataLen;
+@end
+
+
+@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
+- (BOOL)setMyScreenShareVideoShareModeWithEnable:(BOOL)enable SWIFT_WARN_UNUSED_RESULT;
+@property (nonatomic, readonly) BOOL isMyScreenShareVideoShareModeEnabled;
+@end
+
+
 @interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit)) <PlanetKitDebugMonitor>
 /// Gets the monitoring information string.
 - (NSString * _Nonnull)getMonitorInfo SWIFT_WARN_UNUSED_RESULT;
 @end
+
+
 
 
 
@@ -5792,8 +5801,6 @@ SWIFT_CLASS("_TtC9PlanetKit19PlanetKitConference")
 /// If the current peer screen share received count is equal to the maximum count, a new <code>requestPeerScreenShare(peerId:subgroupName:completion)</code> will fail.
 @property (nonatomic, readonly) NSInteger peersScreenShareMaxCount;
 @end
-
-
 
 
 enum PlanetKitVideoResolution : NSInteger;
@@ -5821,6 +5828,16 @@ enum PlanetKitVideoResolution : NSInteger;
 @end
 
 
+
+@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
+- (void)requestPeerScreenShareWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName completion:(void (^ _Nonnull)(BOOL))completion;
+- (void)stopPeerScreenShareWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName completion:(void (^ _Nonnull)(BOOL))completion;
+- (void)addPeerScreenShareViewWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName delegate:(id <PlanetKitVideoOutputDelegate> _Nonnull)delegate;
+- (void)removePeerScreenShareViewWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName delegate:(id <PlanetKitVideoOutputDelegate> _Nonnull)delegate;
+- (void)removeAllPeerScreenShareViewWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName;
+- (NSArray<id <PlanetKitVideoOutputDelegate>> * _Nullable)getPeerScreenShareViewsWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName SWIFT_WARN_UNUSED_RESULT;
+@end
+
 enum PlanetKitUserEquipmentType : NSInteger;
 
 @interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
@@ -5836,16 +5853,6 @@ enum PlanetKitUserEquipmentType : NSInteger;
 /// Gets the call duration.
 /// If the duration is invalid, it returns -1.
 @property (nonatomic, readonly) NSTimeInterval duration;
-@end
-
-
-@interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
-- (void)requestPeerScreenShareWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName completion:(void (^ _Nonnull)(BOOL))completion;
-- (void)stopPeerScreenShareWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName completion:(void (^ _Nonnull)(BOOL))completion;
-- (void)addPeerScreenShareViewWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName delegate:(id <PlanetKitVideoOutputDelegate> _Nonnull)delegate;
-- (void)removePeerScreenShareViewWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName delegate:(id <PlanetKitVideoOutputDelegate> _Nonnull)delegate;
-- (void)removeAllPeerScreenShareViewWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName;
-- (NSArray<id <PlanetKitVideoOutputDelegate>> * _Nullable)getPeerScreenShareViewsWithPeerId:(PlanetKitUserId * _Nonnull)peerId subgroupName:(NSString * _Nullable)subgroupName SWIFT_WARN_UNUSED_RESULT;
 @end
 
 
@@ -5876,7 +5883,6 @@ enum PlanetKitUserEquipmentType : NSInteger;
 /// Unholds the conference to resume.
 - (void)unholdWithCompletion:(void (^ _Nonnull)(BOOL))completion;
 @end
-
 
 @class PlanetKitPeerControl;
 
@@ -5915,6 +5921,7 @@ enum PlanetKitUserEquipmentType : NSInteger;
 /// Gets the existing inbound data session with the stream ID.
 - (PlanetKitInboundDataSession * _Nullable)getInboundDataSessionWithStreamId:(uint32_t)streamId SWIFT_WARN_UNUSED_RESULT;
 @end
+
 
 
 @interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit))
@@ -6857,6 +6864,7 @@ enum PlanetKitVideoHardwareStatus : NSInteger;
 @property (nonatomic, readonly) enum PlanetKitVideoHardwareStatus canSupportVideoHardware;
 @property (nonatomic, readonly) BOOL canSupportVideoHardwareCodec;
 @end
+
 
 
 @interface PlanetKitManager (SWIFT_EXTENSION(PlanetKit))

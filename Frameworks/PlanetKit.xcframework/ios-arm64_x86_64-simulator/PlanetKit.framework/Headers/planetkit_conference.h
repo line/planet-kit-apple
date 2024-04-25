@@ -324,6 +324,16 @@ kit_bool_t      planetkit_conference_scrn_shr_param_is_valid(planetkit_conferenc
 int32_t         planetkit_conference_scrn_shr_param_to_str(planetkit_conference_scrn_shr_param_t * NONNULL param, void * NONNULL buf, int32_t buf_size);
 
 /**
+ * User stat
+ */
+
+/**
+ * @param err_code Maximum size of err_code is 64 bytes including null termination
+ */
+kit_bool_t      planetkit_conference_notify_start_first_my_audio_init(planetkit_conference_t *NONNULL conference);
+kit_bool_t      planetkit_conference_notify_end_first_my_audio_init(planetkit_conference_t *NONNULL conference, planetkit_str_t NULLABLE err_code);
+
+/**
  * Debug API set
  */
 const planetkit_dbg_mon_info_t * NULLABLE planetkit_conference_get_dbg_mon_info(planetkit_conference_t * NONNULL conference);

@@ -249,6 +249,15 @@ planetkit_send_voice_processor_t * NONNULL planetkit_call_get_send_voice_process
 
 
 /**
+ * User stat
+ */
+kit_bool_t      planetkit_call_notify_start_first_my_audio_init(planetkit_call_t * NONNULL call);
+/**
+ * @param err_code Maximum size of err_code is 64 bytes including null termination
+ */
+kit_bool_t      planetkit_call_notify_end_first_my_audio_init(planetkit_call_t * NONNULL call, planetkit_str_t NULLABLE err_code);
+
+/**
  * Utility Functions
  */
 void            planetkit_call_make_call_param_init(planetkit_call_make_call_param_t * NONNULL param);

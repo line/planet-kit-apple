@@ -74,6 +74,8 @@
 @property(nonatomic, assign)    BOOL            micEnabled;
 @property(nonatomic, assign)    BOOL            spkEnabled;
 
+@property(nonatomic, assign)    OSStatus        initStatus;
+
 //@property(nonatomic, readonly, getter=isEnableMic) BOOL enableMic;
 //@property(nonatomic, readonly, getter=isEnableSpk) BOOL enableSpk;
 
