@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
 
   s.name = 'PlanetKit-SDK-Apple'
-  s.version = '5.3.8'
-  s.summary = 'PlanetKit iOS/macOS/tvOS Framework'
-  s.description = 'PlanetKit iOS/macOS/tvOS Framework for Planet VoIP Service'
+  s.version = '5.4.0'
+  s.summary = 'PlanetKit iOS/macOS Framework'
+  s.description = 'PlanetKit iOS/macOS Framework for Planet VoIP Service'
   
   s.homepage = 'https://docs.lineplanet.me'
   s.screenshots = 'https://docs.lineplanet.me/img/planet.png'
@@ -19,6 +19,5 @@ Pod::Spec.new do |s|
   s.swift_version = '5.0'
   s.ios.deployment_target = '12.0'
   s.osx.deployment_target = '10.14.6'
-  s.tvos.deployment_target = '12.0'
 
 end
