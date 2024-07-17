@@ -2689,6 +2689,12 @@ SWIFT_CLASS("_TtC9PlanetKit37PlanetKitJoinConferenceSettingBuilder")
 /// This interval value affects <code>PlanetKitConference.setPeerAudioDescriptionReceiver(_:)</code> and <code>PlanetKitConference.setMyAudioDescriptionReceiver(_:)</code>.
 - (PlanetKitJoinConferenceSettingBuilder * _Nonnull)withAudioDescriptionUpdateIntervalKeyWithInterval:(NSTimeInterval)interval SWIFT_WARN_UNUSED_RESULT;
 - (PlanetKitJoinConferenceSettingBuilder * _Nullable)withSetEndToneKeyWithFileResourceUrl:(NSURL * _Nonnull)fileResourceUrl error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
+/// Sets whether the end tone should be played regardless of the conference state.
+/// remark:
+///
+/// When set to <code>true</code>, this function allows the end tone to be played regardless of the conference state.
+/// The default value is <code>false</code>.
+- (PlanetKitJoinConferenceSettingBuilder * _Nullable)withPlayEndToneRegardlessOfConferenceStateKeyWithEnable:(BOOL)enable error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
 - (NSDictionary<NSString *, id> * _Nonnull)build SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
@@ -2822,6 +2828,12 @@ SWIFT_CLASS("_TtC9PlanetKit31PlanetKitMakeCallSettingBuilder")
 - (PlanetKitMakeCallSettingBuilder * _Nonnull)withAllowCallWithoutMicKeyWithAllow:(BOOL)allow SWIFT_WARN_UNUSED_RESULT;
 - (PlanetKitMakeCallSettingBuilder * _Nullable)withSetRingbackToneKeyWithFileResourceUrl:(NSURL * _Nonnull)fileResourceUrl error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
 - (PlanetKitMakeCallSettingBuilder * _Nullable)withSetEndToneKeyWithFileResourceUrl:(NSURL * _Nonnull)fileResourceUrl error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
+/// Sets whether the end tone should be played regardless of the call state.
+/// remark:
+///
+/// When set to <code>true</code>, this function allows the end tone to be played regardless of the call state.
+/// The default value is <code>false</code>.
+- (PlanetKitMakeCallSettingBuilder * _Nullable)withPlayEndToneRegardlessOfCallStateKeyWithEnable:(BOOL)enable error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
 - (PlanetKitMakeCallSettingBuilder * _Nullable)withSetHoldToneKeyWithFileResourceUrl:(NSURL * _Nonnull)fileResourceUrl error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
 /// Sets preferred maximum video encoding settings.
 /// remark:
@@ -3974,6 +3986,12 @@ SWIFT_CLASS("_TtC9PlanetKit33PlanetKitVerifyCallSettingBuilder")
 - (PlanetKitVerifyCallSettingBuilder * _Nonnull)withAllowCallWithoutMicKeyWithAllow:(BOOL)allow SWIFT_WARN_UNUSED_RESULT;
 - (PlanetKitVerifyCallSettingBuilder * _Nullable)withSetRingToneKeyWithFileResourceUrl:(NSURL * _Nonnull)fileResourceUrl error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
 - (PlanetKitVerifyCallSettingBuilder * _Nullable)withSetEndToneKeyWithFileResourceUrl:(NSURL * _Nonnull)fileResourceUrl error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
+/// Sets whether the end tone should be played regardless of the call state.
+/// remark:
+///
+/// When set to <code>true</code>, this function allows the end tone to be played regardless of the call state.
+/// The default value is <code>false</code>.
+- (PlanetKitVerifyCallSettingBuilder * _Nullable)withPlayEndToneRegardlessOfCallStateKeyWithEnable:(BOOL)enable error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
 - (PlanetKitVerifyCallSettingBuilder * _Nullable)withSetHoldToneKeyWithFileResourceUrl:(NSURL * _Nonnull)fileResourceUrl error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
 /// Sets preferred maximum video encoding settings.
 /// remark:
@@ -6955,6 +6973,12 @@ SWIFT_CLASS("_TtC9PlanetKit37PlanetKitJoinConferenceSettingBuilder")
 /// This interval value affects <code>PlanetKitConference.setPeerAudioDescriptionReceiver(_:)</code> and <code>PlanetKitConference.setMyAudioDescriptionReceiver(_:)</code>.
 - (PlanetKitJoinConferenceSettingBuilder * _Nonnull)withAudioDescriptionUpdateIntervalKeyWithInterval:(NSTimeInterval)interval SWIFT_WARN_UNUSED_RESULT;
 - (PlanetKitJoinConferenceSettingBuilder * _Nullable)withSetEndToneKeyWithFileResourceUrl:(NSURL * _Nonnull)fileResourceUrl error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
+/// Sets whether the end tone should be played regardless of the conference state.
+/// remark:
+///
+/// When set to <code>true</code>, this function allows the end tone to be played regardless of the conference state.
+/// The default value is <code>false</code>.
+- (PlanetKitJoinConferenceSettingBuilder * _Nullable)withPlayEndToneRegardlessOfConferenceStateKeyWithEnable:(BOOL)enable error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
 - (NSDictionary<NSString *, id> * _Nonnull)build SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
@@ -7088,6 +7112,12 @@ SWIFT_CLASS("_TtC9PlanetKit31PlanetKitMakeCallSettingBuilder")
 - (PlanetKitMakeCallSettingBuilder * _Nonnull)withAllowCallWithoutMicKeyWithAllow:(BOOL)allow SWIFT_WARN_UNUSED_RESULT;
 - (PlanetKitMakeCallSettingBuilder * _Nullable)withSetRingbackToneKeyWithFileResourceUrl:(NSURL * _Nonnull)fileResourceUrl error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
 - (PlanetKitMakeCallSettingBuilder * _Nullable)withSetEndToneKeyWithFileResourceUrl:(NSURL * _Nonnull)fileResourceUrl error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
+/// Sets whether the end tone should be played regardless of the call state.
+/// remark:
+///
+/// When set to <code>true</code>, this function allows the end tone to be played regardless of the call state.
+/// The default value is <code>false</code>.
+- (PlanetKitMakeCallSettingBuilder * _Nullable)withPlayEndToneRegardlessOfCallStateKeyWithEnable:(BOOL)enable error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
 - (PlanetKitMakeCallSettingBuilder * _Nullable)withSetHoldToneKeyWithFileResourceUrl:(NSURL * _Nonnull)fileResourceUrl error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
 /// Sets preferred maximum video encoding settings.
 /// remark:
@@ -8240,6 +8270,12 @@ SWIFT_CLASS("_TtC9PlanetKit33PlanetKitVerifyCallSettingBuilder")
 - (PlanetKitVerifyCallSettingBuilder * _Nonnull)withAllowCallWithoutMicKeyWithAllow:(BOOL)allow SWIFT_WARN_UNUSED_RESULT;
 - (PlanetKitVerifyCallSettingBuilder * _Nullable)withSetRingToneKeyWithFileResourceUrl:(NSURL * _Nonnull)fileResourceUrl error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
 - (PlanetKitVerifyCallSettingBuilder * _Nullable)withSetEndToneKeyWithFileResourceUrl:(NSURL * _Nonnull)fileResourceUrl error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
+/// Sets whether the end tone should be played regardless of the call state.
+/// remark:
+///
+/// When set to <code>true</code>, this function allows the end tone to be played regardless of the call state.
+/// The default value is <code>false</code>.
+- (PlanetKitVerifyCallSettingBuilder * _Nullable)withPlayEndToneRegardlessOfCallStateKeyWithEnable:(BOOL)enable error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
 - (PlanetKitVerifyCallSettingBuilder * _Nullable)withSetHoldToneKeyWithFileResourceUrl:(NSURL * _Nonnull)fileResourceUrl error:(NSError * _Nullable * _Nullable)error SWIFT_WARN_UNUSED_RESULT;
 /// Sets preferred maximum video encoding settings.
 /// remark:

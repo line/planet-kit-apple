@@ -125,6 +125,8 @@ kit_bool_t  planetkit_is_valid_id(planetkit_str_t NONNULL id);
 kit_bool_t  planetkit_is_valid_service_id(planetkit_str_t NONNULL service_id);
 kit_bool_t  planetkit_is_valid_api_key(planetkit_str_t NONNULL api_key);
 
+kit_bool_t planetkit_disconnect_reason_is_normal(planetkit_disconnect_reason_e reason);
+
 /**
  * APIs to update settings
  */

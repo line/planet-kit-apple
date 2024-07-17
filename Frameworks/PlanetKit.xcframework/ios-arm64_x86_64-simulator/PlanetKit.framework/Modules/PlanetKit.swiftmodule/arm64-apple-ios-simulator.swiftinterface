@@ -2247,6 +2247,7 @@ extension PlanetKit.PlanetKitAudioMic : PlanetKit.PlanetAudioUnitTargetDelegate 
   @objc public func withAllowCallWithoutMicKey(allow: Swift.Bool) -> PlanetKit.PlanetKitMakeCallSettingBuilder
   @objc public func withSetRingbackToneKey(fileResourceUrl: Foundation.URL) throws -> PlanetKit.PlanetKitMakeCallSettingBuilder
   @objc public func withSetEndToneKey(fileResourceUrl: Foundation.URL) throws -> PlanetKit.PlanetKitMakeCallSettingBuilder
+  @objc public func withPlayEndToneRegardlessOfCallStateKey(enable: Swift.Bool) throws -> PlanetKit.PlanetKitMakeCallSettingBuilder
   @objc public func withSetHoldToneKey(fileResourceUrl: Foundation.URL) throws -> PlanetKit.PlanetKitMakeCallSettingBuilder
   @objc public func withMyVideoSendCapabilityKey(capability: PlanetKit.PlanetKitVideoCapability) -> PlanetKit.PlanetKitMakeCallSettingBuilder
   @objc public func withMyVideoReceiveCapabilityKey(capability: PlanetKit.PlanetKitVideoCapability) -> PlanetKit.PlanetKitMakeCallSettingBuilder
@@ -2274,6 +2275,7 @@ extension PlanetKit.PlanetKitAudioMic : PlanetKit.PlanetAudioUnitTargetDelegate 
   @objc public func withAllowCallWithoutMicKey(allow: Swift.Bool) -> PlanetKit.PlanetKitVerifyCallSettingBuilder
   @objc public func withSetRingToneKey(fileResourceUrl: Foundation.URL) throws -> PlanetKit.PlanetKitVerifyCallSettingBuilder
   @objc public func withSetEndToneKey(fileResourceUrl: Foundation.URL) throws -> PlanetKit.PlanetKitVerifyCallSettingBuilder
+  @objc public func withPlayEndToneRegardlessOfCallStateKey(enable: Swift.Bool) throws -> PlanetKit.PlanetKitVerifyCallSettingBuilder
   @objc public func withSetHoldToneKey(fileResourceUrl: Foundation.URL) throws -> PlanetKit.PlanetKitVerifyCallSettingBuilder
   @objc public func withMyVideoSendCapabilityKey(capability: PlanetKit.PlanetKitVideoCapability) -> PlanetKit.PlanetKitVerifyCallSettingBuilder
   @objc public func withMyVideoReceiveCapabilityKey(capability: PlanetKit.PlanetKitVideoCapability) -> PlanetKit.PlanetKitVerifyCallSettingBuilder
@@ -2317,6 +2319,7 @@ extension PlanetKit.PlanetKitAudioMic : PlanetKit.PlanetAudioUnitTargetDelegate 
   @objc public func withEnableAudioDescriptionKey(enable: Swift.Bool) -> PlanetKit.PlanetKitJoinConferenceSettingBuilder
   @objc public func withAudioDescriptionUpdateIntervalKey(interval: Foundation.TimeInterval) -> PlanetKit.PlanetKitJoinConferenceSettingBuilder
   @objc public func withSetEndToneKey(fileResourceUrl: Foundation.URL) throws -> PlanetKit.PlanetKitJoinConferenceSettingBuilder
+  @objc public func withPlayEndToneRegardlessOfConferenceStateKey(enable: Swift.Bool) throws -> PlanetKit.PlanetKitJoinConferenceSettingBuilder
   @objc public func build() -> [Swift.String : Any]
   @objc override dynamic public init()
   @objc deinit
