@@ -1392,6 +1392,7 @@ extension PlanetKit.PlanetKitDisconnectSource : Swift.CustomStringConvertible {
   case multiDeviceInUse = 1205
   case multiDeviceAnswer = 1206
   case multiDeviceDecline = 1207
+  case maxCallTimeExceeded = 1208
   case networkUnstable = 1301
   case pushError = 1302
   case authError = 1303
@@ -1418,6 +1419,7 @@ extension PlanetKit.PlanetKitDisconnectSource : Swift.CustomStringConvertible {
   case serviceHttpConnectFail = 1509
   case serviceHttpInvalidUrl = 1510
   case serviceIncompatiblePlanetKitVer = 1511
+  case serviceTooManyRequests = 1512
   case unknown = -1
   public init?(rawValue: Swift.Int)
   public typealias RawValue = Swift.Int

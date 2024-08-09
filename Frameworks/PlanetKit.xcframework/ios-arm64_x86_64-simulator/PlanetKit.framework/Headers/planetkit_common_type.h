@@ -240,6 +240,7 @@ typedef enum planetkit_disconnect_reason {
     PLANETKIT_DISCONNECT_REASON_MULTIDEV_IN_USE     = 1205,             ///< [Both][CloudServer] The same id pair (user-id and service-id) is calling in another device
     PLANETKIT_DISCONNECT_REASON_MULTIDEV_ANSWER     = 1206,             ///< [1:1][CloudServer] Responder using the same id pair (user-id and service-id) answered the call in another device
     PLANETKIT_DISCONNECT_REASON_MULTIDEV_DECLINE    = 1207,             ///< [1:1][CloudServer] Responder using the same id pair(user-id and service-id) declined the call in another device
+    PLANETKIT_DISCONNECT_REASON_MAX_CALL_TIME_EXCEEDED = 1208,          ///< [Both][CloudServer] Maximum call time has been reached
 
     // ERROR REASON (1301 ~ 1400)
     PLANETKIT_DISCONNECT_REASON_NETWORK_UNSTABLE    = 1301,             ///< [Both][Caller, Callee, Participant, CloudServer] Network is unavailable to keep a call
@@ -286,6 +287,7 @@ typedef enum planetkit_disconnect_reason {
 
     PLANETKIT_DISCONNECT_REASON_SERVICE_HTTP_INVALID_URL            = 1510,     ///< [Both][Caller, Participant] Wrong URL format or could not resolve host or proxy name
     PLANETKIT_DISCONNECT_REASON_SERVICE_INCOMPATIBLE_PLANETKIT_VER  = 1511,     ///< [Both][CloudServer] The current PlanetKit version is deprecated. Need to upgrade
+    PLANETKIT_DISCONNECT_REASON_SERVICE_TOO_MANY_REQUESTS           = 1512,     ///< [Both][CloudServer] Too many call connection attempts in a short period of time
 
 /* Deprecated disconnect reason */
     // PLANETKIT_DISCONNECT_REASON_AUDIO_TX_NO_SRC_BY_LOCAL    = 1101,

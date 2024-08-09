@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name = 'PlanetKit-SDK-Apple'
-  s.version = '5.4.4'
+  s.version = '5.4.5'
   s.summary = 'PlanetKit iOS/macOS Framework'
   s.description = 'PlanetKit iOS/macOS Framework for Planet VoIP Service'
   

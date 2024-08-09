@@ -2483,6 +2483,8 @@ typedef SWIFT_ENUM(NSInteger, PlanetKitDisconnectReason, closed) {
   PlanetKitDisconnectReasonMultiDeviceAnswer = 1206,
 /// [1:1][CloudServer] Responder using the same ID pair(user-id and service-id) declined the call in another device.
   PlanetKitDisconnectReasonMultiDeviceDecline = 1207,
+/// [Both][CloudServer] Maximum call time has been reached.
+  PlanetKitDisconnectReasonMaxCallTimeExceeded = 1208,
 /// [Both][Caller, Callee, Participant, CloudServer] Network is unavailable to keep a call.
   PlanetKitDisconnectReasonNetworkUnstable = 1301,
 /// [1:1][CloudServer] LINE Planet GW failed to call Notify or notify_cb returned a failure. Please check AppServer or Notify url.
@@ -2545,6 +2547,8 @@ typedef SWIFT_ENUM(NSInteger, PlanetKitDisconnectReason, closed) {
   PlanetKitDisconnectReasonServiceHttpInvalidUrl = 1510,
 /// [Both][CloudServer] The current PlanetKit version is deprecated. Need to upgrade.
   PlanetKitDisconnectReasonServiceIncompatiblePlanetKitVer = 1511,
+/// [Both][CloudServer] Too many call connection attempts in a short period of time.
+  PlanetKitDisconnectReasonServiceTooManyRequests = 1512,
   PlanetKitDisconnectReasonUnknown = -1,
 };
 
@@ -6702,6 +6706,8 @@ typedef SWIFT_ENUM(NSInteger, PlanetKitDisconnectReason, closed) {
   PlanetKitDisconnectReasonMultiDeviceAnswer = 1206,
 /// [1:1][CloudServer] Responder using the same ID pair(user-id and service-id) declined the call in another device.
   PlanetKitDisconnectReasonMultiDeviceDecline = 1207,
+/// [Both][CloudServer] Maximum call time has been reached.
+  PlanetKitDisconnectReasonMaxCallTimeExceeded = 1208,
 /// [Both][Caller, Callee, Participant, CloudServer] Network is unavailable to keep a call.
   PlanetKitDisconnectReasonNetworkUnstable = 1301,
 /// [1:1][CloudServer] LINE Planet GW failed to call Notify or notify_cb returned a failure. Please check AppServer or Notify url.
@@ -6764,6 +6770,8 @@ typedef SWIFT_ENUM(NSInteger, PlanetKitDisconnectReason, closed) {
   PlanetKitDisconnectReasonServiceHttpInvalidUrl = 1510,
 /// [Both][CloudServer] The current PlanetKit version is deprecated. Need to upgrade.
   PlanetKitDisconnectReasonServiceIncompatiblePlanetKitVer = 1511,
+/// [Both][CloudServer] Too many call connection attempts in a short period of time.
+  PlanetKitDisconnectReasonServiceTooManyRequests = 1512,
   PlanetKitDisconnectReasonUnknown = -1,
 };
 
