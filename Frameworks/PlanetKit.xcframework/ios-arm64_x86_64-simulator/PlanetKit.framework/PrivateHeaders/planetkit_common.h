@@ -66,6 +66,9 @@ typedef struct planetkit_init_param {
     const char * NULLABLE app_ver;                    /**< App version
                                                        *   Maximum size of app_ver is 32 bytes including null termination
                                                        *   Any trailing part of the string that exceeds the maximum size is discarded */
+    const char * NULLABLE kit_wrapper_ver;            /**< Kit wrapper version
+                                                       *   Maximum size of extension_ver is 128 bytes including null termination
+                                                       *   Any trailing part of the string that exceeds the maximum size is discarded */
 
     planetkit_network_type_e   network_type;    /**< Radio technology (network type) currently in use on this device for data transmission */
     kit_bool_t  roaming;                        /**< Indicator that this device is in roaming network */
