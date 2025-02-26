@@ -1205,7 +1205,7 @@ SWIFT_PROTOCOL("_TtP9PlanetKit33PlanetKitAudioRouteChangeDelegate_")
 /// Called when the audio route has changed.
 /// \param audioRoute The new audio route, represented by a <code>PlanetKitAudioRoute</code> value.
 ///
-- (void)didAudioRouteChangeWithAudioRoute:(enum PlanetKitAudioRoute)audioRoute;
+- (void)didAudioRouteChangeWithCurrent:(enum PlanetKitAudioRoute)current previous:(enum PlanetKitAudioRoute)previous;
 @end
 
 /// An enumeration representing the sample types used in PlanetKit audio.
@@ -1651,7 +1651,7 @@ SWIFT_PROTOCOL("_TtP9PlanetKit28PlanetKitVideoOutputDelegate_")
 
 
 @interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit)) <PlanetKitAudioRouteChangeDelegate>
-- (void)didAudioRouteChangeWithAudioRoute:(enum PlanetKitAudioRoute)audioRoute;
+- (void)didAudioRouteChangeWithCurrent:(enum PlanetKitAudioRoute)current previous:(enum PlanetKitAudioRoute)previous;
 @end
 
 
@@ -2928,7 +2928,7 @@ SWIFT_CLASS("_TtC9PlanetKit19PlanetKitConference")
 
 
 @interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit)) <PlanetKitAudioRouteChangeDelegate>
-- (void)didAudioRouteChangeWithAudioRoute:(enum PlanetKitAudioRoute)audioRoute;
+- (void)didAudioRouteChangeWithCurrent:(enum PlanetKitAudioRoute)current previous:(enum PlanetKitAudioRoute)previous;
 @end
 
 
@@ -7753,7 +7753,7 @@ SWIFT_PROTOCOL("_TtP9PlanetKit33PlanetKitAudioRouteChangeDelegate_")
 /// Called when the audio route has changed.
 /// \param audioRoute The new audio route, represented by a <code>PlanetKitAudioRoute</code> value.
 ///
-- (void)didAudioRouteChangeWithAudioRoute:(enum PlanetKitAudioRoute)audioRoute;
+- (void)didAudioRouteChangeWithCurrent:(enum PlanetKitAudioRoute)current previous:(enum PlanetKitAudioRoute)previous;
 @end
 
 /// An enumeration representing the sample types used in PlanetKit audio.
@@ -8199,7 +8199,7 @@ SWIFT_PROTOCOL("_TtP9PlanetKit28PlanetKitVideoOutputDelegate_")
 
 
 @interface PlanetKitCall (SWIFT_EXTENSION(PlanetKit)) <PlanetKitAudioRouteChangeDelegate>
-- (void)didAudioRouteChangeWithAudioRoute:(enum PlanetKitAudioRoute)audioRoute;
+- (void)didAudioRouteChangeWithCurrent:(enum PlanetKitAudioRoute)current previous:(enum PlanetKitAudioRoute)previous;
 @end
 
 
@@ -9476,7 +9476,7 @@ SWIFT_CLASS("_TtC9PlanetKit19PlanetKitConference")
 
 
 @interface PlanetKitConference (SWIFT_EXTENSION(PlanetKit)) <PlanetKitAudioRouteChangeDelegate>
-- (void)didAudioRouteChangeWithAudioRoute:(enum PlanetKitAudioRoute)audioRoute;
+- (void)didAudioRouteChangeWithCurrent:(enum PlanetKitAudioRoute)current previous:(enum PlanetKitAudioRoute)previous;
 @end
 
 

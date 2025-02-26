@@ -352,7 +352,7 @@ extension PlanetKit.PlanetKitCall {
   @objc dynamic public func silencePeerAudio(_ silent: Swift.Bool, completion: @escaping (Swift.Bool) -> Swift.Void)
 }
 extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitAudioRouteChangeDelegate {
-  @objc dynamic public func didAudioRouteChange(audioRoute: PlanetKit.PlanetKitAudioRoute)
+  @objc dynamic public func didAudioRouteChange(current: PlanetKit.PlanetKitAudioRoute, previous: PlanetKit.PlanetKitAudioRoute)
 }
 extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitCameraInterruptDelegate {
   @objc dynamic public func camDidInterruptBegin(_ reason: AVFoundation.AVCaptureSession.InterruptionReason)
@@ -915,7 +915,7 @@ extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitAudioVolumeDelegate
   @objc dynamic public func didChangeVolume(_ type: PlanetKit.PlanetKitAudioDeviceType, volume: Swift.Float)
 }
 extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitAudioRouteChangeDelegate {
-  @objc dynamic public func didAudioRouteChange(audioRoute: PlanetKit.PlanetKitAudioRoute)
+  @objc dynamic public func didAudioRouteChange(current: PlanetKit.PlanetKitAudioRoute, previous: PlanetKit.PlanetKitAudioRoute)
 }
 extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitCameraInterruptDelegate {
   @objc dynamic public func camDidInterruptBegin(_ reason: AVFoundation.AVCaptureSession.InterruptionReason)
@@ -1084,7 +1084,7 @@ extension PlanetKit.PlanetKitAudioRoute : Swift.CustomStringConvertible {
   }
 }
 @objc public protocol PlanetKitAudioRouteChangeDelegate {
-  @objc func didAudioRouteChange(audioRoute: PlanetKit.PlanetKitAudioRoute)
+  @objc func didAudioRouteChange(current: PlanetKit.PlanetKitAudioRoute, previous: PlanetKit.PlanetKitAudioRoute)
 }
 @objc @frozen public enum PlanetKitAudioDeviceType : Swift.Int {
   case mic
