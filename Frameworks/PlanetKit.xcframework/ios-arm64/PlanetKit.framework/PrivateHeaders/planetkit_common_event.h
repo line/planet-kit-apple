@@ -30,7 +30,6 @@ typedef enum planetkit_event_type {
     PLANETKIT_EVENT_TYPE_CALL_PREPARATION_FINISHED      = 3,    ///< no param
     PLANETKIT_EVENT_TYPE_CALL_PEER_MEDIA_UNSUPPORTED    = 4,    ///< planetkit_event_param.peer_media_unsupported
 
-    PLANETKIT_EVENT_TYPE_CALL_VIDEO_ENABLED_BY_PEER     = 5,    ///< user must fill 'set_param.enable_video_by_peer'
     PLANETKIT_EVENT_TYPE_CALL_VIDEO_DISABLED_BY_PEER    = 6,    ///< planetkit_event_param.video_disabled
 
     PLANETKIT_EVENT_TYPE_CALL_NET_UNAVAILABLE           = 7,    ///< planetkit_event_param.network_unavailable
@@ -43,6 +42,8 @@ typedef enum planetkit_event_type {
     PLANETKIT_EVENT_TYPE_CALL_PEER_VIDEO_RESUMED        = 12,   ///< no param
 
     PLANETKIT_EVENT_TYPE_CALL_RECORD_ON_CLOUD_UPDATED   = 13,  ///< planetkit_event_param.record_on_cloud_updated
+
+    PLANETKIT_EVENT_TYPE_CALL_VIDEO_ENABLED_BY_PEER_AND_MY_VIDEO_PAUSED = 14, ///< no param
 
     /* conference events : 100 ~ 199 */
     PLANETKIT_EVENT_TYPE_CONF_CONNECTED                 = 100,  ///< planetkit_event_param.conf_connected
@@ -100,6 +101,7 @@ typedef enum planetkit_event_type {
 /*  4.3                     1015    PLANETKIT_EVENT_TYPE_PEER_UNSET_ROOM_SHARED_CONTENTS                                    */
 /*  4.4                     1018    PLANETKIT_EVENT_TYPE_COMMON_PEERS_VIDEO_PAUSED                                          */
 /*  4.4                     1019    PLANETKIT_EVENT_TYPE_COMMON_PEERS_VIDEO_RESUMED                                         */
+/*  6.0                     5       PLANETKIT_EVENT_TYPE_CALL_VIDEO_ENABLED_BY_PEER                                         */
 /*                                                                                                                          */
 } planetkit_event_type_e;
 
@@ -389,11 +391,6 @@ typedef struct planetkit_event_param {
         planetkit_event_fps_limit_updated_t         fps_limit_updated;
         planetkit_event_call_record_on_cloud_updated_t record_on_cloud_updated;
     };
-
-    union {
-        planetkit_event_call_video_enabled_param_t   enable_video_by_peer;
-    } set_param;
-
 } planetkit_event_param_t;
 
 typedef void (*planetkit_evt_handler_t)(void * NULLABLE arg, planetkit_event_param_t * NONNULL param);

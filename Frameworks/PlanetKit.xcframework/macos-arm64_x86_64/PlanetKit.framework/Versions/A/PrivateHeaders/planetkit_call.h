@@ -32,7 +32,10 @@ extern "C" {
 typedef struct planetkit_call   planetkit_call_t;
 
 typedef struct planetkit_call_video_param_t {
+    kit_bool_t                      use_tx_capa;
     planetkit_video_capa_t          tx_capa;
+
+    kit_bool_t                      use_rx_capa;
     planetkit_video_capa_t          rx_capa;
 
     planetkit_vid_handler_t         NONNULL rx_handler;
@@ -269,6 +272,11 @@ kit_bool_t      planetkit_call_notify_start_first_my_audio_init(planetkit_call_t
 kit_bool_t      planetkit_call_notify_end_first_my_audio_init(planetkit_call_t * NONNULL call, planetkit_str_t NULLABLE err_code);
 
 /**
+ * @param desc Maximum size of desc is 64 bytes including null termination
+ */
+kit_bool_t      planetkit_call_notify_my_audio_source_exception(planetkit_call_t * NONNULL call,  planetkit_my_audio_source_exception_e exception, planetkit_str_t NULLABLE desc);
+
+/**
  * Media source event
  */
 kit_bool_t      planetkit_call_register_my_media_source_evt_cb(planetkit_call_t * NONNULL call, planetkit_my_media_source_evt_cb_t NONNULL cb, void *NULLABLE user_ptr,
@@ -294,6 +302,8 @@ int32_t         planetkit_call_video_param_to_str(planetkit_call_video_param_t *
 void            planetkit_call_scrn_shr_param_init(planetkit_call_scrn_shr_param_t * NONNULL param);
 kit_bool_t      planetkit_call_scrn_shr_param_is_valid(planetkit_call_scrn_shr_param_t * NONNULL param);
 int32_t         planetkit_call_scrn_shr_param_to_str(planetkit_call_scrn_shr_param_t * NONNULL param, void * NONNULL buf, int32_t buf_size);
+
+void            planetkit_call_get_device_default_video_capa(planetkit_video_capa_t *NULLABLE tx_capa, planetkit_video_capa_t *NULLABLE rx_capa);
 
  /**
   * Debug API set

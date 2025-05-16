@@ -22,21 +22,6 @@ extern "C" {
 * DATA STRUCTURE
 *************************************************************************/
 
-#define PLANETKIT_MY_SCREEN_SHARE_MAX_FPS_DEFAULT           PLANETKIT_VIDEO_FPS_10
-#define PLANETKIT_MY_SCREEN_SHARE_MAX_RESOLUTION_DEFAULT    PLANETKIT_VIDEO_RESOLUTION_MAX
-
-typedef struct planetkit_cpu_info {
-    float       clock_speed;            /** CPU clock speed (Giga hz) */
-    uint32_t    core_num;               /** The number of core in the cpu */
-} planetkit_cpu_info_t;
-typedef struct planetkit_dev_spec {
-    uint32_t        mem_sz;                 /** Memory size (Giga bytes) */
-    uint32_t        cpu_cnt;                /** The count of cpu */
-
-#define PLANETKIT_DEV_SPEC_MAX_CPU_INFO  4
-    planetkit_cpu_info_t    cpu_info[PLANETKIT_DEV_SPEC_MAX_CPU_INFO];
-} planetkit_dev_spec_t;
-
 typedef struct planetkit_init_param {
     /* HAVE TO call "planetkit_init_param_init" first before use it */
     int _init;
@@ -137,6 +122,8 @@ void        planetkit_update_server_url(const char * NONNULL server_url);
 void        planetkit_update_network_type(planetkit_network_type_e network_type);
 void        planetkit_update_audio_codec_complexity_level(planetkit_audio_codec_complexity_level_e rx_level, planetkit_audio_codec_complexity_level_e tx_level);
 void        planetkit_update_audio_bw_type(planetkit_audio_bw_type_e rx_type, planetkit_audio_bw_type_e tx_type);
+void        planetkit_update_video_preferred_hw_codec(kit_bool_t tx_call, kit_bool_t rx_call, kit_bool_t tx_conf, kit_bool_t rx_conf);
+void        planetkit_get_video_preferred_hw_codec(kit_bool_t *NULLABLE out_tx_call, kit_bool_t *NULLABLE out_rx_call, kit_bool_t *NULLABLE out_tx_conf, kit_bool_t *NULLABLE out_rx_conf);
 
 kit_bool_t  planetkit_get_local_ip(char * NONNULL buf_ptr, int32_t buf_sz);
 kit_bool_t  planetkit_get_network_interface(const char * NONNULL address, char * NONNULL buf_ptr, int32_t buf_sz);
@@ -171,52 +158,6 @@ void        planetkit_comm_param_init_by_default(planetkit_comm_param_t * NONNUL
  * @return KIT_TRUE if H/W codec is supported, KIT_FALSE otherwise
  */
 kit_bool_t  planetkit_get_video_hw_codec_support(void);
-
-/**
- *
- * Get device maximum video attribute (resolution and fps)
- *
- * @param spec_type     video type
- * @param tx_res[out]   Device maximum resolution to send
- * @param tx_fps[out]   Device maximum fps to send
- * @param rx_res[out]   Device maximum resolution to receive
- * @param rx_fps[out]   Device maximum fps to receive
- */
-/**
- * Get device maximum video attribute (resolution and fps)
- *
- * @param spec_type         Video type to get attribute
- * @param prefer_hw_codec   Flag to enable hw codec if possible
- * @param tx_res[out]       Device maximum resolution to send
- * @param tx_fps[out]       Device maximum fps to send
- * @param rx_res[out]       Device maximum resolution to receive
- * @param rx_fps[out]       Device maximum fps to receive
- */
-void        planetkit_get_device_maximum_video_attribute(planetkit_video_spec_type_e spec_type,
-                                                         kit_bool_t prefer_hw_codec,
-                                                         planetkit_video_spec_resolution_e * NULLABLE tx_res,
-                                                         int32_t * NULLABLE tx_fps,
-                                                         planetkit_video_spec_resolution_e * NULLABLE rx_res,
-                                                         int32_t * NULLABLE rx_fps);
-/**
- * Get default preferred maximum video attribute (resolution and fps)
- *
- * @param spec_type         Video type to get attribute
- * @param prefer_hw_codec   Flag to enable hw codec if possible
- * @param tx_res[out]       Preferred maximum resolution to send
- * @param tx_fps[out]       Preferred maximum fps to send
- * @param rx_res[out]       Preferred maximum resolution to receive
- * @param rx_fps[out]       Preferred maximum fps to receive
- */
-void        planetkit_get_default_preferred_video_attribute(planetkit_video_spec_type_e spec_type,
-                                                            kit_bool_t prefer_hw_codec,
-                                                            planetkit_video_spec_resolution_e * NULLABLE tx_res,
-                                                            int32_t * NULLABLE tx_fps,
-                                                            planetkit_video_spec_resolution_e * NULLABLE rx_res,
-                                                            int32_t * NULLABLE rx_fps);
-
-planetkit_video_resolution_e        planetkit_video_resolution_from_spec_resolution(planetkit_video_spec_resolution_e spec_res);
-planetkit_video_spec_resolution_e   planetkit_video_resolution_to_spec_resolution(planetkit_video_resolution_e res);
 
 /**
  * Helper APIs for planet_statistics_t

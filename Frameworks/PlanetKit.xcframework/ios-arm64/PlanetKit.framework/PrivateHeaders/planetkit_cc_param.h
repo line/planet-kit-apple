@@ -37,6 +37,7 @@ void                            planetkit_cc_param_release(planetkit_cc_param_t 
 planetkit_str_t NULLABLE        planetkit_cc_param_get_peer_id(planetkit_cc_param_t *NONNULL cc_param);
 planetkit_str_t NULLABLE        planetkit_cc_param_get_peer_service_id(planetkit_cc_param_t *NONNULL cc_param);
 planetkit_media_type_e          planetkit_cc_param_get_media_type(planetkit_cc_param_t *NONNULL cc_param);
+kit_bool_t                      planetkit_cc_param_is_record_on_cloud_enabled(planetkit_cc_param_t *NONNULL cc_param);
 
 #if defined(__cplusplus)
 }

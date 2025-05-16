@@ -32,9 +32,9 @@ extern planetkit_str_t                      NULLABLE kPlanetKitIdForBroadcastToR
 extern planetkit_str_t                      NULLABLE kPlanetKitMainRoomName;
 
 typedef struct planetkit_conference_video_param_t {
+    kit_bool_t                      use_tx_capa;
     planetkit_video_capa_t          tx_capa;
     int32_t                         tx_prefer_res_target_br_kbps[PLANETKIT_VIDEO_RESOLUTION_MAX+1];
-    planetkit_param_bool_e          rx_prefer_video_hw_codec;
 
     planetkit_vid_handler_t         NULLABLE rx_handler;
     void                        *   NULLABLE user_ptr;
@@ -299,12 +299,6 @@ kit_bool_t      planetkit_conference_set_peers_audio_auto_volume_control(planetk
 kit_bool_t      planetkit_conference_clear_peers_audio_auto_volume_control(planetkit_conference_t * NONNULL conference,
                                                                            void * NULLABLE result_handler_user, planetkit_result_handler_t NULLABLE result_handler);
 
-kit_bool_t      planetkit_conference_set_peer_audio_volume_level_setting(planetkit_conference_t * NONNULL conference,
-                                                                         planetkit_str_t NONNULL peer_id, planetkit_str_t NONNULL peer_service_id,
-                                                                         kit_bool_t set_for_all_subgrps, planetkit_str_t NULLABLE subgrp_name_to_apply,
-                                                                         uint8_t volume_level_setting, /* ranges 0 ~ 100 ~ 110. 0:mute, 100:original volume */
-                                                                         void * NULLABLE result_handler_user, planetkit_result_handler_t NULLABLE result_handler);
-
 /**
  * Subgroup Video API set
  */
@@ -325,6 +319,8 @@ void            planetkit_conference_scrn_shr_param_init(planetkit_conference_sc
 kit_bool_t      planetkit_conference_scrn_shr_param_is_valid(planetkit_conference_scrn_shr_param_t * NONNULL param);
 int32_t         planetkit_conference_scrn_shr_param_to_str(planetkit_conference_scrn_shr_param_t * NONNULL param, void * NONNULL buf, int32_t buf_size);
 
+void            planetkit_conference_get_device_default_video_capa(planetkit_video_capa_t *NULLABLE tx_capa, planetkit_video_capa_t *NULLABLE rx_capa);
+
 /**
  * User stat
  */
@@ -334,6 +330,11 @@ int32_t         planetkit_conference_scrn_shr_param_to_str(planetkit_conference_
  */
 kit_bool_t      planetkit_conference_notify_start_first_my_audio_init(planetkit_conference_t *NONNULL conference);
 kit_bool_t      planetkit_conference_notify_end_first_my_audio_init(planetkit_conference_t *NONNULL conference, planetkit_str_t NULLABLE err_code);
+
+/**
+ * @param desc Maximum size of desc is 64 bytes including null termination
+ */
+kit_bool_t      planetkit_conference_notify_my_audio_source_exception(planetkit_conference_t *NONNULL conference, planetkit_my_audio_source_exception_e exception, planetkit_str_t NULLABLE desc);
 
 /**
  * Media source event

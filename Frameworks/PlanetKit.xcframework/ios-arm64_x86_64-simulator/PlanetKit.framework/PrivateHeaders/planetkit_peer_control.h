@@ -133,6 +133,9 @@ kit_bool_t  planetkit_peer_control_start_screen_share(planetkit_peer_control_t *
 kit_bool_t  planetkit_peer_control_stop_screen_share(planetkit_peer_control_t *NONNULL peer_control,
                                                      void *NULLABLE result_user, planetkit_req_media_result_handler_t NULLABLE result_handler);
 
+kit_bool_t  planetkit_peer_control_set_volume_level_setting(planetkit_peer_control_t *NONNULL peer_control, uint8_t volume_level_setting, /* ranges 0 ~ 100 ~ 110. 0:mute, 100:original volume */
+                                                            void * NULLABLE result_handler_user, planetkit_result_handler_t NULLABLE result_handler);
+
 #if defined(__cplusplus)
 }
 #endif

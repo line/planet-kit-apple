@@ -89,7 +89,7 @@ void planetkit_peer_get_current_screen_share_subgroup_name(planetkit_peer_t *NON
 
 planetkit_peer_get_fail_reason_e planetkit_peer_get_video_status(planetkit_peer_t * NONNULL peer, planetkit_str_t NULLABLE subgrp_name, planetkit_video_status_t * NONNULL out_video_status);
 planetkit_peer_get_fail_reason_e planetkit_peer_get_screen_share_state(planetkit_peer_t * NONNULL peer, planetkit_str_t NULLABLE subgrp_name, planetkit_screen_share_state_e * NONNULL out_state);
-planetkit_peer_get_fail_reason_e planetkit_peer_get_audio_volume_level_setting(planetkit_peer_t * NONNULL peer, planetkit_str_t NULLABLE subgrp_name, uint8_t * NONNULL out_volume_level_setting);
+planetkit_peer_get_fail_reason_e planetkit_peer_get_audio_volume_level_setting(planetkit_peer_t * NONNULL peer, uint8_t * NONNULL out_volume_level_setting);
 
 #if defined(__cplusplus)
 }

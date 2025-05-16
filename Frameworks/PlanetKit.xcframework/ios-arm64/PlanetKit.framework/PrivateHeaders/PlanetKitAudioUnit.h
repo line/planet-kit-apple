@@ -93,6 +93,8 @@ CF_ENUM(AudioObjectPropertySelector)
 - (SInt32)start;
 - (void)stop;
 
+- (void)setMicMuted:(BOOL)muted;
+
 - (PlanetKitAudioMixer *)outputMixer;
 
 + (BOOL)isVoiceProcessingAvailable;

@@ -142,28 +142,15 @@ typedef enum planetkit_video_fps {
     PLANETKIT_VIDEO_FPS_MAX = PLANETKIT_VIDEO_FPS_30,
 } planetkit_video_fps_e;
 
+typedef enum planetkit_video_resolution_capa {
+    PLANETKIT_VIDEO_RESOLUTION_CAPA_QVGA    = 1,
+    PLANETKIT_VIDEO_RESOLUTION_CAPA_VGA     = 2,
+    PLANETKIT_VIDEO_RESOLUTION_CAPA_HD      = 3,
+    PLANETKIT_VIDEO_RESOLUTION_CAPA_FHD     = 4,
+    PLANETKIT_VIDEO_RESOLUTION_CAPA_UHD     = 5,
 
-typedef enum planetkit_video_spec_type {
-    PLANETKIT_VIDEO_SPEC_TYPE_CALL_CAMERA               = 0,
-    PLANETKIT_VIDEO_SPEC_TYPE_CONFERENCE_CAMERA         = 1,
-    PLANETKIT_VIDEO_SPEC_TYPE_CALL_SCREEN_SHARE       = 2,
-    PLANETKIT_VIDEO_SPEC_TYPE_CONFERENCE_SCREEN_SHARE = 3,
-
-    PLANETKIT_VIDEO_SPEC_TYPE_MAX = PLANETKIT_VIDEO_SPEC_TYPE_CONFERENCE_SCREEN_SHARE
-} planetkit_video_spec_type_e;
-
-typedef enum planetkit_video_spec_resolution {
-    PLANETKIT_VIDEO_SPEC_RESOLUTION_THUMBNAIL       = 0,
-    PLANETKIT_VIDEO_SPEC_RESOLUTION_QVGA            = 1,
-    PLANETKIT_VIDEO_SPEC_RESOLUTION_VGA             = 2,
-    PLANETKIT_VIDEO_SPEC_RESOLUTION_HD              = 3,
-    PLANETKIT_VIDEO_SPEC_RESOLUTION_FHD             = 4,
-    PLANETKIT_VIDEO_SPEC_RESOLUTION_UHD             = 5,
-
-    PLANETKIT_VIDEO_SPEC_RESOLUTION_UNKNOWN         = 1000,
-
-    PLANETKIT_VIDEO_SPEC_RESOLUTION_MAX = PLANETKIT_VIDEO_SPEC_RESOLUTION_UHD
-} planetkit_video_spec_resolution_e;
+    PLANETKIT_VIDEO_RESOLUTION_CAPA_MAX     = PLANETKIT_VIDEO_RESOLUTION_CAPA_UHD,
+} planetkit_video_resolution_capa_e;
 
 typedef enum planetkit_audio_ns_type {
     PLANETKIT_AUDIO_NS_TYPE_WEBRTC                  = 0,
@@ -345,9 +332,8 @@ typedef struct planetkit_short_data_target_t {
 } planetkit_short_data_target_t;
 
 typedef struct planetkit_video_capa_t {
-    planetkit_video_resolution_e    max_resolution;
-    planetkit_video_fps_e           max_fps;
-    planetkit_param_bool_e          prefer_hw_codec;
+    planetkit_video_resolution_capa_e   max_resolution;
+    planetkit_video_fps_e               max_fps;
 } planetkit_video_capa_t;
 
 typedef struct planetkit_comm_param {
@@ -357,8 +343,7 @@ typedef struct planetkit_comm_param {
     uint32_t    max_tx_link_bw_kbps;
     uint32_t    max_rx_link_bw_kbps;
 
-    planetkit_audio_ns_type_e aud_tx_ns_type;
-    planetkit_audio_aec_type_e aud_tx_aec_type;
+    kit_bool_t  disable_mlns;
 
 } planetkit_comm_param_t;
 
@@ -778,6 +763,14 @@ typedef enum planetkit_record_on_cloud_deactivate_reason_e
     PLANETKIT_RECORD_ON_CLOUD_DEACTIVATE_REASON_INTERNAL = 0,
     PLANETKIT_RECORD_ON_CLOUD_DEACTIVATE_REASON_ACTIVATION_FAILED = 1,              // Recording failed on the cloud
 } planetkit_record_on_cloud_deactivate_reason_e;
+
+typedef enum planetkit_my_audio_source_exception_e
+{
+    PLANETKIT_MY_AUDIO_SOURCE_EXCEPTION_NO_SOURCE = 0,
+    PLANETKIT_MY_AUDIO_SOURCE_EXCEPTION_OPEN_FAILED = 1,
+
+    PLANETKIT_MY_AUDIO_SOURCE_EXCEPTION_COUNT = 2,
+} planetkit_my_audio_source_exception_e;
 
 typedef void (*planetkit_req_media_result_handler_t)(void *NULLABLE result_user,
                                                      kit_bool_t is_success,
