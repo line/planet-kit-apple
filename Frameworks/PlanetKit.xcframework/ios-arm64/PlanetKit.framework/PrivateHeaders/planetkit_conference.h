@@ -58,6 +58,9 @@ typedef struct planetkit_conference_param_t {
     planetkit_str_t                 NONNULL room_service_id;
     planetkit_str_t                 NULLABLE app_server_data;   // Maximum size of app_server_data is 4096 bytes including null termination
 
+    uint32_t                        custom_defined_user_type;   // A value that allows the user to set a custom defined user type.
+                                                                // 1 ~ 9999 is for user defined type and 0, 10000 ~ is reserved for PlanetKit type.
+
     planetkit_param_bool_e          start_with_video;
     planetkit_param_bool_e          enable_statistics;
 

@@ -706,6 +706,12 @@ extension PlanetKit.PlanetKitUserEquipmentType : Swift.CustomStringConvertible {
     @objc get
     @objc set
   }
+  public var myCustomUserType: Swift.Int? {
+    get
+  }
+  @objc public var myCustomUserTypeValue: Foundation.NSNumber? {
+    @objc get
+  }
   @objc deinit
 }
 extension PlanetKit.PlanetKitConference {
@@ -818,6 +824,9 @@ extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitStatisticsControllable {
   @objc public var sipDeviceInfo: Swift.String? {
     get
   }
+  @objc public var userType: PlanetKit.PlanetKitUserTypeContainer {
+    get
+  }
   @objc deinit
 }
 extension PlanetKit.PlanetKitConferencePeer {
@@ -836,6 +845,54 @@ extension PlanetKit.PlanetKitConferencePeer {
 @objc @_hasMissingDesignatedInitializers public class PlanetKitSharedContents : ObjectiveC.NSObject {
   @objc final public let data: Foundation.Data
   @objc final public let elapsedSeconds: Foundation.TimeInterval
+  @objc deinit
+}
+@objc @frozen public enum PlanetKitUserType : Swift.Int {
+  case undefined = 0
+  case audioCaller = 10000
+  case audioEchoCallee = 10001
+  case videoEchoCallee = 10002
+  case mentalHealthCounselor = 10003
+  case reserved1 = 10004
+  case reserved2 = 10005
+  case reserved3 = 10006
+  case reserved4 = 10007
+  case reserved5 = 10008
+  case participantInterpreter = 20000
+  case participantTranscriber = 20001
+  case participantMentalHealthCounselor = 20002
+  case participantReserved1 = 20003
+  case participantReserved2 = 20004
+  case participantReserved3 = 20005
+  case participantReserved4 = 20006
+  case participantReserved5 = 20007
+  case unknown = 99999
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension PlanetKit.PlanetKitUserType : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+@objc @_hasMissingDesignatedInitializers public class PlanetKitUserTypeContainer : ObjectiveC.NSObject {
+  final public let planetKitUserType: PlanetKit.PlanetKitUserType?
+  @objc public var planetKitUserTypeValue: Foundation.NSNumber? {
+    @objc get
+  }
+  final public let customUserType: Swift.Int?
+  @objc public var customUserTypeValue: Foundation.NSNumber? {
+    @objc get
+  }
+  @objc public var isPlanetKitUserType: Swift.Bool {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
   @objc deinit
 }
 @objc @frozen public enum PlanetKitNSErrorCode : Swift.Int {
@@ -1102,7 +1159,7 @@ extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitAudioMicCaptureDele
 extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitAudioSpkPlayDelegate {
   @objc dynamic public func willPlay(frameCnt: Swift.UInt32, channels: Swift.UInt32, sampleRate: Swift.UInt32, sampleType: PlanetKit.PlanetKitAudioSampleType, timestamp: CoreAudioTypes.AudioTimeStamp, playBuf: Swift.UnsafeMutableRawPointer!, playBufSize: Swift.UInt32) -> Swift.Int32
 }
-extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitVideoOutputDelegate {
+@_documentation(visibility: internal) extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitVideoOutputDelegate {
   @objc dynamic public func videoOutput(_ videoBuffer: PlanetKit.PlanetKitVideoBuffer)
 }
 extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitVideoLimiter {
@@ -1947,7 +2004,7 @@ extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitAudioMicCaptureDelegate {
 extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitAudioSpkPlayDelegate {
   @objc dynamic public func willPlay(frameCnt: Swift.UInt32, channels: Swift.UInt32, sampleRate: Swift.UInt32, sampleType: PlanetKit.PlanetKitAudioSampleType, timestamp: CoreAudioTypes.AudioTimeStamp, playBuf: Swift.UnsafeMutableRawPointer!, playBufSize: Swift.UInt32) -> Swift.Int32
 }
-extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitVideoOutputDelegate {
+@_documentation(visibility: internal) extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitVideoOutputDelegate {
   @objc dynamic public func videoOutput(_ videoBuffer: PlanetKit.PlanetKitVideoBuffer)
 }
 extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitVideoLimiter {
@@ -2082,6 +2139,7 @@ extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitVideoLimiter {
   @objc public func withAudioDescriptionUpdateIntervalKey(interval: Foundation.TimeInterval) -> PlanetKit.PlanetKitJoinConferenceSettingBuilder
   @objc public func withSetEndToneKey(fileResourceUrl: Foundation.URL) throws -> PlanetKit.PlanetKitJoinConferenceSettingBuilder
   @objc public func withPlayEndToneRegardlessOfConferenceStateKey(enable: Swift.Bool) throws -> PlanetKit.PlanetKitJoinConferenceSettingBuilder
+  @objc public func withCustomUserTypeKey(customUserType: Swift.Int) throws -> PlanetKit.PlanetKitJoinConferenceSettingBuilder
   @objc public func build() throws -> [Swift.String : Any]
   @objc override dynamic public init()
   @objc deinit
@@ -2379,7 +2437,7 @@ extension PlanetKit.PlanetKitCameraManager {
   @objc dynamic public func setCustomCamera(_ customCamera: PlanetKit.PlanetKitCustomCamera)
   @objc dynamic public func resetCustomCameraToDefaultCamera()
 }
-extension PlanetKit.PlanetKitCameraManager : PlanetKit.PlanetKitVideoOutputDelegate {
+@_documentation(visibility: internal) extension PlanetKit.PlanetKitCameraManager : PlanetKit.PlanetKitVideoOutputDelegate {
   @objc dynamic public func videoOutput(_ videoBuffer: PlanetKit.PlanetKitVideoBuffer)
 }
 extension PlanetKit.PlanetKitCameraManager {
@@ -2516,6 +2574,11 @@ extension PlanetKit.PlanetKitMediaDisableReason : Swift.Hashable {}
 extension PlanetKit.PlanetKitMediaDisableReason : Swift.RawRepresentable {}
 extension PlanetKit.PlanetKitMediaDisableReason : Swift.Sendable {}
 extension PlanetKit.PlanetKitMediaDisableReason : Swift.BitwiseCopyable {}
+extension PlanetKit.PlanetKitUserType : Swift.Equatable {}
+extension PlanetKit.PlanetKitUserType : Swift.Hashable {}
+extension PlanetKit.PlanetKitUserType : Swift.RawRepresentable {}
+extension PlanetKit.PlanetKitUserType : Swift.Sendable {}
+extension PlanetKit.PlanetKitUserType : Swift.BitwiseCopyable {}
 extension PlanetKit.PlanetKitNSErrorCode : Swift.Equatable {}
 extension PlanetKit.PlanetKitNSErrorCode : Swift.Hashable {}
 extension PlanetKit.PlanetKitNSErrorCode : Swift.RawRepresentable {}

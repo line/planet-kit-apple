@@ -12,6 +12,8 @@
 // License for the specific language governing permissions and limitations
 // under the License.
 
+#import <Foundation/Foundation.h>
+
 static NSString *const BCCUtilsKeyWWANSent = @"WWANSent";
 static NSString *const BCCUtilsKeyWWANReceived = @"WWANReceived";
 static NSString *const BCCUtilsKeyWiFiSent = @"WiFiSent";

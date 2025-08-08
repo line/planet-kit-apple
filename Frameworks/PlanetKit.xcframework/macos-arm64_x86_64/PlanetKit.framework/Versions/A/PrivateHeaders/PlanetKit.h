@@ -7,11 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
-#import "PlanetKitNative.h"
-#import "PlanetKitAudioUnit.h"
-#import "PlanetKitAudioPlayer.h"
-#import "PlanetKitVideoFormatConverter.h"
-#import "BCCUtils.h"
+#import <AVFoundation/AVFoundation.h>
 
 // In this header, you should import all the public headers of your framework using statements like #import <PlanetKit_macOS/PublicHeader.h>

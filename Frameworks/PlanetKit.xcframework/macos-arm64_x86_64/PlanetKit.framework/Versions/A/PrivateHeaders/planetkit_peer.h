@@ -51,6 +51,58 @@ typedef struct planetkit_peer_hold_status_t {
     char            hold_reason[PLANETKIT_HOLD_REASON_MAX_SIZE];
 } planetkit_peer_hold_status_t;
 
+typedef enum planetkit_user_type_container_type_e {
+    PLANETKIT_USER_TYPE_CONTAINER_TYPE_PLANETKIT = 0,
+    PLANETKIT_USER_TYPE_CONTAINER_TYPE_CUSTOM = 1,
+} planetkit_user_type_container_type_e;
+
+#define PLANETKIT_USER_TYPE_MIN PLANETKIT_USER_TYPE_AUDIO_CALLER
+
+typedef enum planetkit_user_type_e {
+    PLANETKIT_USER_TYPE_UNDEFINED = 0,                  /* Represents an undefined user type.
+                                                           This is used when the user type is not specified. */
+
+    /* 1on1 Call : 10000 ~ 19999 */
+    PLANETKIT_USER_TYPE_AUDIO_CALLER        = 10000,    /* Represents an audio caller agent in the Planet Cloud. When this type is specified, the audio caller agent acts as the caller and establishes an audio call to the target user.
+                                                           For more details, see: https://docs.lineplanet.me/server-api/agent-call/server-api-audio-caller */
+    PLANETKIT_USER_TYPE_AUDIO_ECHO_CALLEE   = 10001,    /* Represents an audio echo callee agent in the Planet Cloud.
+                                                           When this type is specified, the agent acts as the callee and accepts an audio call from the user, echoing the received audio back to the user. */
+    PLANETKIT_USER_TYPE_VIDEO_ECHO_CALLEE  = 10002,     /* Represents a video echo callee agent in the Planet Cloud.
+                                                           When this type is specified, the agent acts as the callee and accepts a video call from the user, returning the video along with the echoed audio. */
+    PLANETKIT_USER_TYPE_MENTAL_HEALTH_COUNSELOR = 10003, /* Represents a mental health counselor agent in the Planet Cloud.
+                                                            When this type is specified, the agent can act as the caller or the callee, providing audio-based counseling. */
+    PLANETKIT_USER_TYPE_RESERVED_1 = 10004,             /* Reserved user types for future use.
+                                                           These values are currently not defined and are reserved for potential future extensions.
+                                                           This represents 10004. */
+    PLANETKIT_USER_TYPE_RESERVED_2 = 10005,             /* This represents 10005.*/
+    PLANETKIT_USER_TYPE_RESERVED_3 = 10006,             /* This represents 10006.*/
+    PLANETKIT_USER_TYPE_RESERVED_4 = 10007,             /* This represents 10007.*/
+    PLANETKIT_USER_TYPE_RESERVED_5 = 10008,             /* This represents 10008.*/
+
+    /* Conference Call : 20000 ~ 29999 */
+    PLANETKIT_USER_TYPE_PARTICIPANT_INTERPRETER     = 20000,    /* Represents an interpreter participant agent in the Planet Cloud.
+                                                                   When this type is specified, the agent interprets speech from one language to another in a group call, receiving and sending audio streams. Additional language setting is required at the time of joining. */
+    PLANETKIT_USER_TYPE_PARTICIPANT_TRANSCRIBER     = 20001,    /* Represents a transcriber participant agent in the Planet Cloud.
+                                                                   When this type is specified, the agent provides speech-to-text (STT) functionality in a group call, receiving audio streams and sending text output. Additional language setting is required at the time of joining. */
+    PLANETKIT_USER_TYPE_PARTICIPANT_MENTAL_HEALTH_COUNSELOR = 20002,    /* Represents a mental health counselor participant agent in the Planet Cloud.
+                                                                           When this type is specified, the agent provides counseling in a group audio call, receiving and sending audio. */
+    PLANETKIT_USER_TYPE_PARTICIPANT_RESERVED_1 = 20003, /* This represents 20003.*/
+    PLANETKIT_USER_TYPE_PARTICIPANT_RESERVED_2 = 20004, /* This represents 20004.*/
+    PLANETKIT_USER_TYPE_PARTICIPANT_RESERVED_3 = 20005, /* This represents 20005.*/
+    PLANETKIT_USER_TYPE_PARTICIPANT_RESERVED_4 = 20006, /* This represents 20006.*/
+    PLANETKIT_USER_TYPE_PARTICIPANT_RESERVED_5 = 20007, /* This represents 20007.*/
+
+    PLANETKIT_USER_TYPE_UNKNOWN = 99999, // If a planetkit user type that is not assigned an enum value is received, it will be handled as UNKNOWN.
+} planetkit_user_type_e;
+
+typedef struct planetkit_user_type_container_t {
+    planetkit_user_type_container_type_e container_type;
+    union {
+        uint32_t custom_type;  // Custom type, if type is PLANETKIT_USER_TYPE_CONTAINER_TYPE_CUSTOM
+        planetkit_user_type_e planetkit_type;
+    } value;
+} planetkit_user_type_container_t;
+
 /*************************************************************************
 * API DEFINITION
 *************************************************************************/
@@ -68,6 +120,7 @@ planetkit_user_equipment_type_e planetkit_peer_get_user_equipment_type(planetkit
 planetkit_str_t NULLABLE planetkit_peer_get_display_name(planetkit_peer_t * NONNULL peer);
 planetkit_str_t NULLABLE planetkit_peer_get_sip_terminal_local_ip(planetkit_peer_t * NONNULL peer);
 planetkit_str_t NULLABLE planetkit_peer_get_sip_terminal_dev_info(planetkit_peer_t * NONNULL peer);
+void        planetkit_peer_get_user_type(planetkit_peer_t *NONNULL peer, planetkit_user_type_container_t *NONNULL out_type_container);
 
 /**
  * Shared contents APIs

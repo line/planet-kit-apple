@@ -1,0 +1,8 @@
+module PlanetKitInternal [system] {
+     header "PrivateHeaders/BCCUtils.h"
+     header "PrivateHeaders/PlanetKitNative.h"
+     header "PrivateHeaders/PlanetKitAudioUnit.h"
+     header "PrivateHeaders/PlanetKitAudioPlayer.h"
+     header "PrivateHeaders/PlanetKitVideoFormatConverter.h"
+     export *
+}

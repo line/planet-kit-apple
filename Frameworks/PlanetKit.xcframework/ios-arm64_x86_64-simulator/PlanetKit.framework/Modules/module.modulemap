@@ -1,8 +1,8 @@
 framework module PlanetKit {
-  umbrella header "PlanetKit.h"
-  export *
-
-  module * { export * }
+    umbrella header "PlanetKit.h"
+    
+    export *
+    module * { export * }
 }
 
 module PlanetKit.Swift {

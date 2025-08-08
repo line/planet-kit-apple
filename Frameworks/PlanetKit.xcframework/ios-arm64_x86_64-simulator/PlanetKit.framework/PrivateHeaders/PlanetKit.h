@@ -7,12 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-#import "PlanetKitNative.h"
-#import "PlanetKitAudioUnit.h"
-#import "PlanetKitAudioPlayer.h"
-#import "PlanetKitVideoFormatConverter.h"
-#import "BCCUtils.h"
+#import <AVFoundation/AVFoundation.h>
 
 //! Project version string for PlanetKit.
 FOUNDATION_EXPORT const unsigned char PlanetKitVersionString[];
