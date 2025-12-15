@@ -813,19 +813,19 @@ extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitStatisticsControllable {
     @objc get
   }
   @objc public var userEquipmentType: PlanetKit.PlanetKitUserEquipmentType {
-    get
+    @objc get
   }
   @objc public var displayName: Swift.String? {
-    get
+    @objc get
   }
   @objc public var sipLocalIP: Swift.String? {
-    get
+    @objc get
   }
   @objc public var sipDeviceInfo: Swift.String? {
-    get
+    @objc get
   }
   @objc public var userType: PlanetKit.PlanetKitUserTypeContainer {
-    get
+    @objc get
   }
   @objc deinit
 }
@@ -1811,6 +1811,10 @@ extension PlanetKit.PlanetKitCall {
     @objc get
   }
 }
+extension PlanetKit.PlanetKitManager {
+  @available(*, deprecated, message: "Use of this API is not recommended for privacy reasons. There is no safe replacement.")
+  @objc dynamic public func dangerouslyKeepMicActiveDuringCall()
+}
 @objc @frozen public enum PlanetKitMediaType : Swift.Int {
   case unknown
   case audio
@@ -2322,8 +2326,10 @@ extension PlanetKit.PlanetKitLogLevel : Swift.CustomStringConvertible {
   @objc public static func c(_ message: @autoclosure () -> Swift.String, _ line: Swift.Int = #line)
   @objc deinit
 }
-@objc public class PlanetKitCCParam : ObjectiveC.NSObject {
-  @objc final public let ccParam: Swift.String
+@objc @_hasMissingDesignatedInitializers public class PlanetKitCCParam : ObjectiveC.NSObject {
+  @objc public var ccParam: Swift.String {
+    @objc get
+  }
   @objc public var peerId: Swift.String? {
     @objc get
   }
@@ -2659,6 +2665,11 @@ extension PlanetKit.PlanetKitInitialMyVideoState : Swift.Hashable {}
 extension PlanetKit.PlanetKitInitialMyVideoState : Swift.RawRepresentable {}
 extension PlanetKit.PlanetKitInitialMyVideoState : Swift.Sendable {}
 extension PlanetKit.PlanetKitInitialMyVideoState : Swift.BitwiseCopyable {}
+extension PlanetKit.PlanetKitCallKitType : Swift.Equatable {}
+extension PlanetKit.PlanetKitCallKitType : Swift.Hashable {}
+extension PlanetKit.PlanetKitCallKitType : Swift.RawRepresentable {}
+extension PlanetKit.PlanetKitCallKitType : Swift.Sendable {}
+extension PlanetKit.PlanetKitCallKitType : Swift.BitwiseCopyable {}
 extension PlanetKit.PlanetKitScreenShare.BroadcastError : Swift.Equatable {}
 extension PlanetKit.PlanetKitScreenShare.BroadcastError : Swift.Hashable {}
 extension PlanetKit.PlanetKitScreenShare.BroadcastError : Swift.RawRepresentable {}
@@ -2713,11 +2724,6 @@ extension PlanetKit.PlanetKitSettingError : Swift.Equatable {}
 extension PlanetKit.PlanetKitSettingError : Swift.Hashable {}
 extension PlanetKit.PlanetKitSettingError : Swift.RawRepresentable {}
 extension PlanetKit.PlanetKitSettingError : Swift.BitwiseCopyable {}
-extension PlanetKit.PlanetKitCallKitType : Swift.Equatable {}
-extension PlanetKit.PlanetKitCallKitType : Swift.Hashable {}
-extension PlanetKit.PlanetKitCallKitType : Swift.RawRepresentable {}
-extension PlanetKit.PlanetKitCallKitType : Swift.Sendable {}
-extension PlanetKit.PlanetKitCallKitType : Swift.BitwiseCopyable {}
 extension PlanetKit.PlanetKitLogLevel : Swift.Equatable {}
 extension PlanetKit.PlanetKitLogLevel : Swift.Hashable {}
 extension PlanetKit.PlanetKitLogLevel : Swift.RawRepresentable {}

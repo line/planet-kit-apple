@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>BuildMachineOSBuild</key>
-	<string>24G90</string>
+	<string>24G325</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -17,13 +17,13 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>6.1.1</string>
+	<string>6.2.0</string>
 	<key>CFBundleSupportedPlatforms</key>
 	<array>
 		<string>MacOSX</string>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>0</string>
+	<string>12</string>
 	<key>DTCompiler</key>
 	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>
@@ -41,7 +41,7 @@
 	<key>DTXcodeBuild</key>
 	<string>16C5032a</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.14.6</string>
+	<string>10.15</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2020-2022 LINE Plus Corp, All rights reserved.</string>
 </dict>

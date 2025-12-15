@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name = 'PlanetKit-SDK-Apple'
-  s.version = '6.1.1'
+  s.version = '6.2.0'
   s.summary = 'PlanetKit iOS/macOS Framework'
   s.description = 'PlanetKit iOS/macOS Framework for Planet VoIP Service'
   
@@ -18,6 +18,6 @@ Pod::Spec.new do |s|
   s.vendored_frameworks = 'Frameworks/PlanetKit.xcframework'
   s.swift_version = '5.0'
   s.ios.deployment_target = '13.0'
-  s.osx.deployment_target = '10.14.6'
+  s.osx.deployment_target = '10.15'
 
 end
