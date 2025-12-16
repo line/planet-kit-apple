@@ -7,8 +7,8 @@ LINE Planet is a cloud-based real-time communications platform as a service (CPa
 ## Installation
 
 ### Requirement
-* iOS 12.0 or later
-* macOS 10.14.6 or later
+* iOS 13.0 or later
+* macOS 10.15 or later
 
 ### Swift Package Manager
 
@@ -33,11 +33,11 @@ $ gem install cocoapods
 To integrate PlanetKit into your Xcode project using CocoaPods, specify it to a target in your `Podfile`:
 
 ```
-platform :ios, '12.0'
+platform :ios, '13.0'
 use_frameworks!
  
 target 'MyApp' do
-  pod 'PlanetKit-SDK-Apple', '~> 5.3', :source => 'https://github.com/line/planet-kit-cocoapods-specs.git'
+  pod 'PlanetKit-SDK-Apple', '~> 6.2', :source => 'https://github.com/line/planet-kit-cocoapods-specs.git'
 end
 ```
 
@@ -50,8 +50,8 @@ $ pod install
 ## API Reference
 For detailed information on APIs, please refer to the following documents.
 
-* [iOS API Reference](https://docs.lineplanet.me/api-reference/client/ios/5.3/index.html)
-* [macOS API Reference](https://docs.lineplanet.me/api-reference/client/macos/5.3/index.html)
+* [iOS API Reference](https://docs.lineplanet.me/api-reference/client/ios/6.2/documentation/planetkit)
+* [macOS API Reference](https://docs.lineplanet.me/api-reference/client/macos/6.2/documentation/planetkit)
 
 ## Issues and Inquiries
 Please file any issues or inquiries you have to our representative or dl_planet_help@linecorp.com.
