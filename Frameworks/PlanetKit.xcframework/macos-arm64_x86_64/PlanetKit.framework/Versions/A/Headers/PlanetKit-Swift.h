@@ -859,6 +859,9 @@ typedef SWIFT_ENUM(NSInteger, PlanetKitAutoGainControlMode, closed) {
   PlanetKitAutoGainControlModeSoftware = 1,
 /// Auto gain control is performed in hardware.
   PlanetKitAutoGainControlModeHardware = 2,
+/// Auto gain control is performed in hardware according to the echo tolerance.
+/// Adjusts the input gain based on the speaker’s voice level, even when echo is present in the environment.
+  PlanetKitAutoGainControlModeHardwareEchoTolerance = 3,
 };
 
 enum PlanetKitMediaType : NSInteger;
@@ -6989,6 +6992,9 @@ typedef SWIFT_ENUM(NSInteger, PlanetKitAutoGainControlMode, closed) {
   PlanetKitAutoGainControlModeSoftware = 1,
 /// Auto gain control is performed in hardware.
   PlanetKitAutoGainControlModeHardware = 2,
+/// Auto gain control is performed in hardware according to the echo tolerance.
+/// Adjusts the input gain based on the speaker’s voice level, even when echo is present in the environment.
+  PlanetKitAutoGainControlModeHardwareEchoTolerance = 3,
 };
 
 enum PlanetKitMediaType : NSInteger;
