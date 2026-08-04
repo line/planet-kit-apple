@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.0.3 effective-5.10 (swiftlang-6.0.3.1.10 clang-1600.0.30.1)
-// swift-module-flags: -target arm64-apple-macos10.15 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name PlanetKit
-// swift-module-flags-ignorable: -no-verify-emitted-module-interface
+// swift-compiler-version: Apple Swift version 6.2 effective-5.10 (swiftlang-6.2.0.19.9 clang-1700.3.19.1)
+// swift-module-flags: -target arm64-apple-macos10.15 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name PlanetKit
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2
 import AVFoundation
 import AVKit
 import AppKit
@@ -35,18 +35,26 @@ import IOKit.pwr_mgt
     get
   }
   @objc deinit
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var uid: Swift.String? {
     @objc get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var name: Swift.String? {
     @objc get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var deviceName: Swift.String? {
     @objc get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var modelName: Swift.String? {
     @objc get
   }
+  #endif
   @objc public var isAggregateType: Swift.Bool {
     @objc get
   }
@@ -83,9 +91,11 @@ import IOKit.pwr_mgt
   @objc public var displayID: CoreGraphics.CGDirectDisplayID {
     @objc get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var image: CoreGraphics.CGImage? {
     @objc get
   }
+  #endif
   @objc public var unitNumber: Swift.UInt32 {
     @objc get
   }
@@ -110,9 +120,11 @@ import IOKit.pwr_mgt
   @objc public var isInMirrorSet: Swift.Bool {
     @objc get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var mirrorDisplay: PlanetKit.PlanetKitScreenCaptureDisplay? {
     @objc get
   }
+  #endif
   @objc public var primaryDisplay: PlanetKit.PlanetKitScreenCaptureDisplay {
     @objc get
   }
@@ -160,9 +172,11 @@ extension PlanetKit.PlanetKitScreenCaptureDisplay {
     get
   }
   @objc weak public var windowFilter: (any PlanetKit.PlanetKitScreenCaptureWindowFilterControllable)?
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var image: CoreGraphics.CGImage? {
     @objc get
   }
+  #endif
   @objc public var backingType: CoreGraphics.CGWindowBackingType {
     @objc get
   }
@@ -199,20 +213,28 @@ extension PlanetKit.PlanetKitScreenCaptureDisplay {
   @objc public var capturedBounds: CoreFoundation.CGRect {
     get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var bundleId: Swift.String? {
     @objc get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var bundle: Foundation.Bundle? {
     @objc get
   }
+  #endif
   @objc public var hasMultipleWindows: Swift.Bool
   @objc public var isVisibleOnScreen: Swift.Bool
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc convenience public init?(windowID: CoreGraphics.CGWindowID, inDesktop: Swift.Bool = false)
+  #endif
   @objc override dynamic public var description: Swift.String {
     @objc get
   }
   @objc public static func list(windowID: CoreGraphics.CGWindowID, option: CoreGraphics.CGWindowListOption) -> [PlanetKit.PlanetKitScreenCaptureWindow]
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public static func get(windowID: CoreGraphics.CGWindowID) -> PlanetKit.PlanetKitScreenCaptureWindow?
+  #endif
   @objc public static func get(pid: Swift.Int32) -> [PlanetKit.PlanetKitScreenCaptureWindow]
   @objc deinit
 }
@@ -221,10 +243,14 @@ extension PlanetKit.PlanetKitScreenCaptureWindow {
   @objc dynamic public func stopCapture()
 }
 @objc public protocol PlanetKitScreenCaptureWindowFilterControllable {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc func filterOut(_ window: PlanetKit.PlanetKitScreenCaptureWindow) -> [PlanetKit.PlanetKitScreenCaptureWindow]?
+  #endif
 }
 @objc @_inheritsConvenienceInitializers public class PlanetKitScreenCaptureWindowFilter : ObjectiveC.NSObject, PlanetKit.PlanetKitScreenCaptureWindowFilterControllable {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public func filterOut(_ window: PlanetKit.PlanetKitScreenCaptureWindow) -> [PlanetKit.PlanetKitScreenCaptureWindow]?
+  #endif
   @objc override dynamic public init()
   @objc deinit
 }
@@ -238,7 +264,9 @@ extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitDebugMonitor {
   @objc dynamic public func getMonitorInfo() -> Swift.String
 }
 extension PlanetKit.PlanetKitConference {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func createPeerControl(peer: PlanetKit.PlanetKitConferencePeer) -> PlanetKit.PlanetKitPeerControl?
+  #endif
 }
 extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitSharedContentsControllable {
   @objc dynamic public func setSharedContents(data: Foundation.Data, completion: @escaping (Swift.Bool) -> Swift.Void)
@@ -258,9 +286,15 @@ extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitSharedContentsControllabl
   @objc deinit
 }
 extension PlanetKit.PlanetKitSubgroupManager {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func subscribe(subgroupName: Swift.String, peerUpdateType: PlanetKit.PlanetKitSubgroupPeerUpdateType, videoUpdate: Swift.Bool, useDataSession: Swift.Bool, completion: @escaping (PlanetKit.PlanetKitSubgroup?, PlanetKit.PlanetKitSubgroupSubscribeFailReason) -> Swift.Void)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func unsubscribe(subgroupName: Swift.String, completion: @escaping (PlanetKit.PlanetKitSubgroup?, PlanetKit.PlanetKitSubgroupUnsubscribeFailReason) -> Swift.Void)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func getSubgroup(subgroupName: Swift.String?) -> PlanetKit.PlanetKitSubgroup?
+  #endif
 }
 extension PlanetKit.PlanetKitSubgroupManager {
   @objc dynamic public func changeMyVideoDestination(subgroupName: Swift.String, completion: @escaping (Swift.Bool) -> Swift.Void)
@@ -271,7 +305,9 @@ extension PlanetKit.PlanetKitSubgroupManager {
   @objc dynamic public func clearTagMyAudioOfMainRoom(completion: @escaping (Swift.Bool) -> Swift.Void)
 }
 extension PlanetKit.PlanetKitSubgroupManager {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func silencePeersAudio(subgroupName: Swift.String?, silenced: Swift.Bool, completion: @escaping (Swift.Bool) -> Swift.Void)
+  #endif
   @objc dynamic public func setPeersAudioAutoVolumeControl(focusSubgroupNames: [Swift.String], focusMainRoom: Swift.Bool, completion: @escaping (Swift.Bool) -> Swift.Void)
   @objc dynamic public func clearPeersAudioAutoVolumeControl(completion: @escaping (Swift.Bool) -> Swift.Void)
 }
@@ -288,15 +324,19 @@ extension PlanetKit.PlanetKitVideoStream : PlanetKit.PlanetKitVideoStreamDelegat
   @objc dynamic public func videoOutput(_ videoBuffer: PlanetKit.PlanetKitVideoBuffer)
 }
 extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitStatisticsControllable {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public var statistics: PlanetKit.PlanetKitStatistics? {
     @objc get
   }
+  #endif
 }
 @objc public protocol PlanetKitCallDelegate {
   @objc func didWaitConnect(_ call: PlanetKit.PlanetKitCall)
   @objc func didConnect(_ call: PlanetKit.PlanetKitCall, connected: PlanetKit.PlanetKitCallConnectedParam)
   @objc func didDisconnect(_ call: PlanetKit.PlanetKitCall, disconnected: PlanetKit.PlanetKitDisconnectedParam)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc func didVerify(_ call: PlanetKit.PlanetKitCall, peerStartMessage: PlanetKit.PlanetKitCallStartMessage?, peerUseResponderPreparation: Swift.Bool)
+  #endif
   @objc func didFinishPreparation(_ call: PlanetKit.PlanetKitCall)
   @objc optional func networkDidUnavailable(_ call: PlanetKit.PlanetKitCall, isPeer: Swift.Bool, willDisconnected seconds: Foundation.TimeInterval)
   @objc optional func networkDidReavailable(_ call: PlanetKit.PlanetKitCall, isPeer: Swift.Bool)
@@ -311,10 +351,14 @@ extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitStatisticsControllable {
   @objc optional func peerMicDidMute(_ call: PlanetKit.PlanetKitCall)
   @objc optional func peerMicDidUnmute(_ call: PlanetKit.PlanetKitCall)
   @objc optional func myMuteRequestedByPeer(_ call: PlanetKit.PlanetKitCall, mute: Swift.Bool)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc optional func peerDidHold(_ call: PlanetKit.PlanetKitCall, reason: Swift.String?)
+  #endif
   @objc optional func peerDidUnhold(_ call: PlanetKit.PlanetKitCall)
   @objc optional func peerDidStartScreenShare(_ call: PlanetKit.PlanetKitCall)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc optional func peerDidStopScreenShare(_ call: PlanetKit.PlanetKitCall, reason: Foundation.NSNumber?)
+  #endif
   @objc optional func myScreenShareDidStopByHold(_ call: PlanetKit.PlanetKitCall)
   @objc optional func dataSessionIncoming(_ call: PlanetKit.PlanetKitCall, streamId: PlanetKit.PlanetKitDataSessionStreamId, type: PlanetKit.PlanetKitDataSessionType)
   @objc optional func peerDidSetSharedContents(_ call: PlanetKit.PlanetKitCall, data: Foundation.Data, elapsed seconds: Foundation.TimeInterval)
@@ -337,7 +381,9 @@ extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitStatisticsControllable {
   case portraitUpsideDown = 2
   case landscapeLeft = 4
   case landscapeRight = 3
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -348,7 +394,9 @@ extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitStatisticsControllable {
   case rotation90 = 1
   case rotation180 = 2
   case rotation270 = 3
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int32)
+  #endif
   public typealias RawValue = Swift.Int32
   public var rawValue: Swift.Int32 {
     get
@@ -362,7 +410,9 @@ extension PlanetKit.PlanetKitVideoRotation : Swift.CustomStringConvertible {
 @objc @frozen public enum PlanetKitVideoSource : Swift.Int {
   case camera
   case screen
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -382,7 +432,9 @@ extension PlanetKit.PlanetKitVideoSource : Swift.CustomStringConvertible {
   case enableVideoResponse
   case cameraInactive
   case hold
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -398,7 +450,9 @@ extension PlanetKit.PlanetKitVideoPauseReason : Swift.CustomStringConvertible {
   case vga
   case hd
   case fhd
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -416,7 +470,9 @@ extension PlanetKit.PlanetKitVideoResolutionCapability : Swift.CustomStringConve
   case qvga
   case vga
   case hd
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -434,7 +490,9 @@ extension PlanetKit.PlanetKitVideoResolution : Swift.CustomStringConvertible {
   case fps15 = 15
   case fps24 = 24
   case fps30 = 30
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -450,7 +508,9 @@ extension PlanetKit.PlanetKitVideoFps : Swift.CustomStringConvertible {
   case callReceive
   case conferenceSend
   case conferenceReceive
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -491,14 +551,20 @@ extension PlanetKit.PlanetKitVideoFps : Swift.CustomStringConvertible {
   @objc final public let position: PlanetKit.PlanetKitCameraPosition
   @objc final public let sender: PlanetKit.PlanetKitUserId?
   @objc final public let source: PlanetKit.PlanetKitVideoSource
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public init(sampleBuffer: CoreMedia.CMSampleBuffer?, timestamp: CoreMedia.CMTime, rotation: PlanetKit.PlanetKitVideoRotation, position: PlanetKit.PlanetKitCameraPosition, sender: PlanetKit.PlanetKitUserId?, source: PlanetKit.PlanetKitVideoSource)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public init(pixelBuffer: CoreVideo.CVPixelBuffer?, sampleBuffer: CoreMedia.CMSampleBuffer?, timestamp: CoreMedia.CMTime, rotation: PlanetKit.PlanetKitVideoRotation, position: PlanetKit.PlanetKitCameraPosition, sender: PlanetKit.PlanetKitUserId?, source: PlanetKit.PlanetKitVideoSource)
+  #endif
   @objc deinit
 }
 @objc @frozen public enum PlanetKitVideoModifierError : Swift.Int32 {
   case videoFrameRejectedByUpscaling
   case videoFrameRejectedByFormatChange
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int32)
+  #endif
   public typealias RawValue = Swift.Int32
   public var rawValue: Swift.Int32 {
     get
@@ -523,7 +589,9 @@ extension PlanetKit.PlanetKitVideoFps : Swift.CustomStringConvertible {
   @objc optional func peersDidUnhold(_ conference: PlanetKit.PlanetKitConference, peers: [PlanetKit.PlanetKitConferencePeer])
   @objc optional func screenShareDidUpdate(_ conference: PlanetKit.PlanetKitConference, updated: PlanetKit.PlanetKitConferenceScreenShareUpdateParam)
   @objc optional func myScreenShareDidStopByHold(_ conference: PlanetKit.PlanetKitConference)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc optional func dataSessionIncoming(_ conference: PlanetKit.PlanetKitConference, streamId: PlanetKit.PlanetKitDataSessionStreamId, subgroup: PlanetKit.PlanetKitSubgroup?, type: PlanetKit.PlanetKitDataSessionType)
+  #endif
   @objc optional func peersDidSetSharedContents(_ conference: PlanetKit.PlanetKitConference, sharedContents: [PlanetKit.PlanetKitConferenceSetSharedContent])
   @objc optional func peersDidUnsetSharedContents(_ conference: PlanetKit.PlanetKitConference, peers: [PlanetKit.PlanetKitConferencePeer])
   @objc optional func peerDidSetExclusivelySharedContents(_ conference: PlanetKit.PlanetKitConference, peer: PlanetKit.PlanetKitConferencePeer, data: Foundation.Data, elapsed seconds: Foundation.TimeInterval)
@@ -544,7 +612,9 @@ extension PlanetKit.PlanetKitVideoFps : Swift.CustomStringConvertible {
   case disabled = 0
   case enabled = 1
   case paused = 2
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -553,7 +623,9 @@ extension PlanetKit.PlanetKitVideoFps : Swift.CustomStringConvertible {
 @objc @frozen public enum PlanetKitScreenShareState : Swift.Int {
   case disabled = 0
   case enabled = 1
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -605,7 +677,9 @@ extension PlanetKit.PlanetKitVideoFps : Swift.CustomStringConvertible {
   case none
   case peerUsedUnsupportedFeature
   case user
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -639,7 +713,9 @@ extension PlanetKit.PlanetKitVideoFps : Swift.CustomStringConvertible {
   case trying
   case connected
   case disconnected
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -654,7 +730,9 @@ extension PlanetKit.PlanetKitVideoFps : Swift.CustomStringConvertible {
   case web
   case windows
   case sipTerminal
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -690,10 +768,12 @@ extension PlanetKit.PlanetKitUserEquipmentType : Swift.CustomStringConvertible {
   @objc public var callKitType: PlanetKit.PlanetKitCallKitType {
     get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var screen: (any PlanetKit.PlanetKitScreenControllable)? {
     @objc get
     @objc set
   }
+  #endif
   @objc final public let sendVoiceProcessor: PlanetKit.PlanetKitSendVoiceProcessor
   @objc public var subgroupManager: PlanetKit.PlanetKitSubgroupManager! {
     get
@@ -710,33 +790,45 @@ extension PlanetKit.PlanetKitUserEquipmentType : Swift.CustomStringConvertible {
   @objc public var myMediaStatus: PlanetKit.PlanetKitMyMediaStatus! {
     get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc weak public var peerAudioDescriptionReceiver: (any PlanetKit.PlanetKitPeerAudioDescriptionDelegate)? {
     @objc get
     @objc set
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc weak public var myAudioDescriptionReceiver: (any PlanetKit.PlanetKitMyAudioDescriptionDelegate)? {
     @objc get
     @objc set
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc weak public var myScreenShareModifier: (any PlanetKit.PlanetKitVideoModifierDelegate)? {
     @objc get
     @objc set
   }
+  #endif
   public var myCustomUserType: Swift.Int? {
     get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var myCustomUserTypeValue: Foundation.NSNumber? {
     @objc get
   }
+  #endif
   @objc deinit
 }
 extension PlanetKit.PlanetKitConference {
   @objc dynamic public func isMe(peer: PlanetKit.PlanetKitConferencePeer) -> Swift.Bool
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func getPeer(peerId: PlanetKit.PlanetKitUserId) -> PlanetKit.PlanetKitConferencePeer?
+  #endif
 }
 extension PlanetKit.PlanetKitConference {
   @objc dynamic public func leaveConference()
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func hold(reason: Swift.String?, completion: @escaping (Swift.Bool) -> Swift.Void)
+  #endif
   @objc dynamic public func unhold(completion: @escaping (Swift.Bool) -> Swift.Void)
 }
 extension PlanetKit.PlanetKitConference {
@@ -764,9 +856,11 @@ extension PlanetKit.PlanetKitConference {
   @objc dynamic public var myUserEquipmentType: PlanetKit.PlanetKitUserEquipmentType {
     @objc get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public var myDisplayName: Swift.String? {
     @objc get
   }
+  #endif
 }
 extension PlanetKit.PlanetKitSubgroup : PlanetKit.PlanetKitDataSessionControllable {
   @objc dynamic public var isSupportedDataSession: Swift.Bool {
@@ -775,15 +869,21 @@ extension PlanetKit.PlanetKitSubgroup : PlanetKit.PlanetKitDataSessionControllab
   @objc dynamic public func makeOutboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId, type: PlanetKit.PlanetKitDataSessionType, delegate: any PlanetKit.PlanetKitOutboundDataSessionDelegate, completion: @escaping PlanetKit.PlanetKitOutboundDataSession.Completion)
   @objc dynamic public func makeInboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId, delegate: any PlanetKit.PlanetKitInboundDataSessionDelegate, completion: @escaping PlanetKit.PlanetKitInboundDataSession.Completion)
   @objc dynamic public func unsupportInboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func getOutboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId) -> PlanetKit.PlanetKitOutboundDataSession?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func getInboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId) -> PlanetKit.PlanetKitInboundDataSession?
+  #endif
 }
 @objc @frozen public enum PlanetKitMediaType : Swift.Int {
   case unknown
   case audio
   case video
   case audiovideo
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -798,7 +898,9 @@ extension PlanetKit.PlanetKitMediaType : Swift.CustomStringConvertible {
   case small = 0
   case medium = 1
   case large = 2
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -853,7 +955,9 @@ extension PlanetKit.PlanetKitLogSizeLimit : Swift.CustomStringConvertible {
   @objc public var appServerData: Swift.String?
   @objc public var mediaType: PlanetKit.PlanetKitMediaType
   @objc public var initialMyVideoState: PlanetKit.PlanetKitInitialMyVideoState
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public init(myUserId: PlanetKit.PlanetKitUserId, roomId: Swift.String, roomServiceId: Swift.String, displayName: Swift.String?, delegate: any PlanetKit.PlanetKitConferenceDelegate, accessToken: Swift.String)
+  #endif
   @objc deinit
 }
 @_hasMissingDesignatedInitializers @objc public class PlanetKitCallMakeResult : ObjectiveC.NSObject {
@@ -892,15 +996,25 @@ extension PlanetKit.PlanetKitManager {
 }
 extension PlanetKit.PlanetKitManager {
   @objc dynamic public func makeCall(param: PlanetKit.PlanetKitCallParam) -> PlanetKit.PlanetKitCallMakeResult
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func makeCall(param: PlanetKit.PlanetKitCallParam, settings: [Swift.String : Any]?) -> PlanetKit.PlanetKitCallMakeResult
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func verifyCall(myUserId: PlanetKit.PlanetKitUserId, ccParam: PlanetKit.PlanetKitCCParam, delegate: (any PlanetKit.PlanetKitCallDelegate)?) -> PlanetKit.PlanetKitCallVerifyResult
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func verifyCall(myUserId: PlanetKit.PlanetKitUserId, ccParam: PlanetKit.PlanetKitCCParam, settings: [Swift.String : Any]?, delegate: (any PlanetKit.PlanetKitCallDelegate)?) -> PlanetKit.PlanetKitCallVerifyResult
+  #endif
 }
 extension PlanetKit.PlanetKitManager {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func joinConference(param: PlanetKit.PlanetKitConferenceParam, settings: [Swift.String : Any]?) -> PlanetKit.PlanetKitConferenceJoinResult
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public var conference: PlanetKit.PlanetKitConference? {
     @objc get
   }
+  #endif
 }
 extension PlanetKit.PlanetKitManager {
   @objc dynamic public func getDeviceDefaultVideoCapability(usage: PlanetKit.PlanetKitVideoCapabilityUsage) -> PlanetKit.PlanetKitVideoCapability
@@ -988,19 +1102,25 @@ extension PlanetKit.PlanetKitAudioManager {
   @objc public var ccParam: Swift.String {
     @objc get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var peerId: Swift.String? {
     @objc get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var serviceId: Swift.String? {
     @objc get
   }
+  #endif
   @objc public var mediaType: PlanetKit.PlanetKitMediaType {
     @objc get
   }
   @objc public var isRecordOnCloudEnabled: Swift.Bool {
     @objc get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public init?(ccParam: Swift.String)
+  #endif
   @objc deinit
 }
 @objc @frozen public enum PlanetKitAcousticEchoCancellerMode : Swift.Int {
@@ -1009,7 +1129,9 @@ extension PlanetKit.PlanetKitAudioManager {
   case intensityMin
   case intensityMax
   case intensityAdaptive
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -1023,7 +1145,9 @@ extension PlanetKit.PlanetKitAcousticEchoCancellerMode : Swift.CustomStringConve
 @objc @frozen public enum PlanetKitNoiseSuppressorMode : Swift.Int {
   case disabled
   case enabled
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -1039,7 +1163,9 @@ extension PlanetKit.PlanetKitNoiseSuppressorMode : Swift.CustomStringConvertible
   case software
   case hardware
   case hardwareEchoTolerance
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -1072,7 +1198,9 @@ extension PlanetKit.PlanetKitAutoGainControlMode : Swift.CustomStringConvertible
 }
 extension PlanetKit.PlanetKitSendVoiceProcessor {
   @objc public static let didChangeNotification: Foundation.NSNotification.Name
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public static func queryChangeNotificationValue(from: Foundation.Notification) -> PlanetKit.PlanetKitSendVoiceProcessorChangeNotificationValue?
+  #endif
 }
 @_hasMissingDesignatedInitializers @objc public class PlanetKitSendVoiceProcessorChangeNotificationValue : ObjectiveC.NSObject {
   @objc final public let origin: PlanetKit.PlanetKitSendVoiceProcessorChangeOrigin
@@ -1083,7 +1211,9 @@ extension PlanetKit.PlanetKitSendVoiceProcessor {
 @objc @frozen public enum PlanetKitSendVoiceProcessorChangeOrigin : Swift.Int {
   case user
   case vpio
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -1094,7 +1224,9 @@ extension PlanetKit.PlanetKitSendVoiceProcessor {
   case acousticEchoCanceller
   case noiseSuppressor
   case autoGainControl
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -1114,7 +1246,9 @@ extension PlanetKit.PlanetKitSendVoiceProcessorTargetProperty : Swift.CustomStri
   case invalidValue
   case invalidDuplicate
   case callKitSettingNotSet
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public static var _nsErrorDomain: Swift.String {
     get
@@ -1127,7 +1261,9 @@ extension PlanetKit.PlanetKitSendVoiceProcessorTargetProperty : Swift.CustomStri
   case none = 0
   case user
   case planetKit
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -1163,6 +1299,7 @@ extension PlanetKit.PlanetKitSendVoiceProcessorTargetProperty : Swift.CustomStri
   @objc public func withCustomScreenShareStreamKey(videoStream: PlanetKit.PlanetKitVideoStream) -> PlanetKit.PlanetKitMakeCallSettingBuilder
   @objc public func withEnableAudioDescriptionKey(enable: Swift.Bool) -> PlanetKit.PlanetKitMakeCallSettingBuilder
   @objc public func withAudioDescriptionUpdateIntervalKey(interval: Foundation.TimeInterval) -> PlanetKit.PlanetKitMakeCallSettingBuilder
+  @objc public func withInitialMyAudioStateKey(_ state: PlanetKit.PlanetKitInitialMyAudioState) -> PlanetKit.PlanetKitMakeCallSettingBuilder
   @objc public func build() -> [Swift.String : Any]
   @objc override dynamic public init()
   @objc deinit
@@ -1204,22 +1341,33 @@ extension PlanetKit.PlanetKitSendVoiceProcessorTargetProperty : Swift.CustomStri
   @objc public func withSetEndToneKey(fileResourceUrl: Foundation.URL) throws -> PlanetKit.PlanetKitJoinConferenceSettingBuilder
   @objc public func withPlayEndToneRegardlessOfConferenceStateKey(enable: Swift.Bool) throws -> PlanetKit.PlanetKitJoinConferenceSettingBuilder
   @objc public func withCustomUserTypeKey(customUserType: Swift.Int) throws -> PlanetKit.PlanetKitJoinConferenceSettingBuilder
+  @objc public func withInitialMyAudioStateKey(_ state: PlanetKit.PlanetKitInitialMyAudioState) -> PlanetKit.PlanetKitJoinConferenceSettingBuilder
   @objc public func build() -> [Swift.String : Any]
   @objc override dynamic public init()
   @objc deinit
 }
 extension PlanetKit.PlanetKitConference {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func startMyScreenShare(device: PlanetKit.PlanetKitScreenCaptureDevice, subgroupName: Swift.String?, completion: @escaping (Swift.Bool) -> Swift.Void)
+  #endif
   @objc dynamic public func stopMyScreenShare(completion: @escaping (Swift.Bool) -> Swift.Void)
   @objc dynamic public func stopMyScreenShare(reason: Swift.Int32, completion: @escaping (Swift.Bool) -> Swift.Void)
   @objc dynamic public func changeMyScreenShareDestination(subgroupName: Swift.String, completion: @escaping (Swift.Bool) -> Swift.Void)
   @objc dynamic public func changeMyScreenShareDestinationToMainRoom(completion: @escaping (Swift.Bool) -> Swift.Void)
 }
 extension PlanetKit.PlanetKitConference {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func addPeerScreenShareView(peerId: PlanetKit.PlanetKitUserId, subgroupName: Swift.String?, delegate: any PlanetKit.PlanetKitVideoOutputDelegate)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func removePeerScreenShareView(peerId: PlanetKit.PlanetKitUserId, subgroupName: Swift.String?, delegate: any PlanetKit.PlanetKitVideoOutputDelegate)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func removeAllPeerScreenShareView(peerId: PlanetKit.PlanetKitUserId, subgroupName: Swift.String?)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func getPeerScreenShareViews(peerId: PlanetKit.PlanetKitUserId, subgroupName: Swift.String?) -> [any PlanetKit.PlanetKitVideoOutputDelegate]?
+  #endif
 }
 extension PlanetKit.PlanetKitConference {
   @objc dynamic public var peersVideoMaxCount: Swift.Int {
@@ -1238,7 +1386,9 @@ extension PlanetKit.PlanetKitConference {
 @objc @frozen public enum PlanetKitLogLevel : Swift.Int32 {
   case detailed = 5
   case simple = 4
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int32)
+  #endif
   public typealias RawValue = Swift.Int32
   public var rawValue: Swift.Int32 {
     get
@@ -1256,13 +1406,19 @@ extension PlanetKit.PlanetKitLogLevel : Swift.CustomStringConvertible {
   @objc final public let logDirectory: Swift.String
   @objc final public let logLevel: PlanetKit.PlanetKitLogLevel
   @objc final public let logFileName: Swift.String?
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public static func withSizeLimitUnlimited(logDirectory: Swift.String, logFileName: Swift.String?, logLevel: PlanetKit.PlanetKitLogLevel = .simple) -> PlanetKit.PlanetKitLogOption?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public static func withSizeLimit(logDirectory: Swift.String, logLevel: PlanetKit.PlanetKitLogLevel = .simple, logSizeLimit: PlanetKit.PlanetKitLogSizeLimit = .large) -> PlanetKit.PlanetKitLogOption?
+  #endif
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @_documentation(visibility: internal) public class PlanetKitLog : ObjectiveC.NSObject {
   @objc public static var shared: PlanetKit.PlanetKitLog
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public func setErrorObservable(observer: (any PlanetKit.PlanetKitLogObserver)?)
+  #endif
   @objc public func resetAllObserver()
   @objc public static func i(_ message: @autoclosure () -> Swift.String, _ line: Swift.Int = #line)
   @objc public static func v(_ message: @autoclosure () -> Swift.String, _ line: Swift.Int = #line)
@@ -1271,19 +1427,29 @@ extension PlanetKit.PlanetKitLogLevel : Swift.CustomStringConvertible {
   @objc deinit
 }
 extension PlanetKit.PlanetKitCall {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func sendMicData(frameCnt: Swift.UInt32, sampleRate: Swift.UInt32, sampleType: PlanetKit.PlanetKitAudioSampleType, outData: Swift.UnsafeMutableRawPointer!, outDataLen: Swift.UInt32)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func recvSpkData(frameCnt: Swift.UInt32, sampleRate: Swift.UInt32, sampleType: PlanetKit.PlanetKitAudioSampleType, playBuf: Swift.UnsafeMutableRawPointer!, playBufSize: Swift.UInt32) -> Swift.Int32
+  #endif
 }
 extension PlanetKit.PlanetKitCall {
   @objc dynamic public func startUserAcousticEchoCancellerReference(_ completion: @escaping (Swift.Bool) -> Swift.Void)
   @objc dynamic public func stopUserAcousticEchoCancellerReference(_ completion: @escaping (Swift.Bool) -> Swift.Void)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func putUserAcousticEchoCancellerReference(frameCnt: Swift.UInt32, channels: Swift.UInt32, sampleRate: Swift.UInt32, sampleType: PlanetKit.PlanetKitAudioSampleType, outData: Swift.UnsafeMutableRawPointer!, outDataLen: Swift.UInt32)
+  #endif
 }
 extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitAudioMicCaptureDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func didCapture(frameCnt: Swift.UInt32, channels: Swift.UInt32, sampleRate: Swift.UInt32, sampleType: PlanetKit.PlanetKitAudioSampleType, timestamp: CoreAudioTypes.AudioTimeStamp, outData: Swift.UnsafeMutableRawPointer!, outDataLen: Swift.UInt32)
+  #endif
 }
 extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitAudioSpkPlayDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func willPlay(frameCnt: Swift.UInt32, channels: Swift.UInt32, sampleRate: Swift.UInt32, sampleType: PlanetKit.PlanetKitAudioSampleType, timestamp: CoreAudioTypes.AudioTimeStamp, playBuf: Swift.UnsafeMutableRawPointer!, playBufSize: Swift.UInt32) -> Swift.Int32
+  #endif
 }
 @_documentation(visibility: internal) extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitVideoOutputDelegate {
   @objc dynamic public func videoOutput(_ videoBuffer: PlanetKit.PlanetKitVideoBuffer)
@@ -1293,19 +1459,29 @@ extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitVideoLimiter {
   @objc dynamic public func isVideoSendAvailable(_ timestamp: CoreMedia.CMTime) -> Swift.Bool
 }
 extension PlanetKit.PlanetKitConference {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func sendMicData(frameCnt: Swift.UInt32, sampleRate: Swift.UInt32, sampleType: PlanetKit.PlanetKitAudioSampleType, outData: Swift.UnsafeMutableRawPointer!, outDataLen: Swift.UInt32)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func recvSpkData(frameCnt: Swift.UInt32, sampleRate: Swift.UInt32, sampleType: PlanetKit.PlanetKitAudioSampleType, playBuf: Swift.UnsafeMutableRawPointer!, playBufSize: Swift.UInt32) -> Swift.Int32
+  #endif
 }
 extension PlanetKit.PlanetKitConference {
   @objc dynamic public func startUserAcousticEchoCancellerReference(_ completion: @escaping (Swift.Bool) -> Swift.Void)
   @objc dynamic public func stopUserAcousticEchoCancellerReference(_ completion: @escaping (Swift.Bool) -> Swift.Void)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func putUserAcousticEchoCancellerReference(frameCnt: Swift.UInt32, channels: Swift.UInt32, sampleRate: Swift.UInt32, sampleType: PlanetKit.PlanetKitAudioSampleType, outData: Swift.UnsafeMutableRawPointer!, outDataLen: Swift.UInt32)
+  #endif
 }
 extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitAudioMicCaptureDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func didCapture(frameCnt: Swift.UInt32, channels: Swift.UInt32, sampleRate: Swift.UInt32, sampleType: PlanetKit.PlanetKitAudioSampleType, timestamp: CoreAudioTypes.AudioTimeStamp, outData: Swift.UnsafeMutableRawPointer!, outDataLen: Swift.UInt32)
+  #endif
 }
 extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitAudioSpkPlayDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func willPlay(frameCnt: Swift.UInt32, channels: Swift.UInt32, sampleRate: Swift.UInt32, sampleType: PlanetKit.PlanetKitAudioSampleType, timestamp: CoreAudioTypes.AudioTimeStamp, playBuf: Swift.UnsafeMutableRawPointer!, playBufSize: Swift.UInt32) -> Swift.Int32
+  #endif
 }
 @_documentation(visibility: internal) extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitVideoOutputDelegate {
   @objc dynamic public func videoOutput(_ videoBuffer: PlanetKit.PlanetKitVideoBuffer)
@@ -1318,7 +1494,9 @@ extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitVideoLimiter {
   case unknown
   case front
   case back
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -1349,18 +1527,26 @@ public typealias PlanetKitCameraPreset = AVFoundation.AVCaptureSession.Preset
 @objc public protocol PlanetKitCameraDelegate {
   @objc func didStart(_ deviceInfo: any PlanetKit.PlanetKitVideoCaptureDeviceInfo)
   @objc func didStop(_ deviceInfo: any PlanetKit.PlanetKitVideoCaptureDeviceInfo)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc func didUpdate(_ deviceInfo: (any PlanetKit.PlanetKitVideoCaptureDeviceInfo)?)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc func didFail(_ error: Foundation.NSError, deviceInfo: (any PlanetKit.PlanetKitVideoCaptureDeviceInfo)?)
+  #endif
 }
 extension PlanetKit.PlanetKitVideoBuffer {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public static func getPreferredSampleBuffer(_ buffer: CoreMedia.CMSampleBuffer) -> CoreMedia.CMSampleBuffer?
+  #endif
 }
 extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitAudioVolumeDelegate {
   @objc dynamic public func didChangeVolume(_ type: PlanetKit.PlanetKitAudioDeviceType, volume: Swift.Float)
 }
 extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitAudioDeviceChangeDelegate {
   @objc dynamic public func didAudioDevicesUpdate(devices: [PlanetKit.PlanetKitAudioDevice])
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func didAudioDeviceChange(device: PlanetKit.PlanetKitAudioDevice?, type: PlanetKit.PlanetKitAudioDeviceType)
+  #endif
   @objc dynamic public func didAudioDeviceDataSourceChange(device: PlanetKit.PlanetKitAudioDevice, dataSource: Swift.UInt32)
 }
 extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitCameraDeviceChangeDelegate {
@@ -1372,8 +1558,12 @@ extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitDataSessionControllable {
   @objc dynamic public func makeOutboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId, type: PlanetKit.PlanetKitDataSessionType, delegate: any PlanetKit.PlanetKitOutboundDataSessionDelegate, completion: @escaping PlanetKit.PlanetKitOutboundDataSession.Completion)
   @objc dynamic public func makeInboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId, delegate: any PlanetKit.PlanetKitInboundDataSessionDelegate, completion: @escaping PlanetKit.PlanetKitInboundDataSession.Completion)
   @objc dynamic public func unsupportInboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func getOutboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId) -> PlanetKit.PlanetKitOutboundDataSession?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func getInboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId) -> PlanetKit.PlanetKitInboundDataSession?
+  #endif
 }
 @objc @_hasMissingDesignatedInitializers public class PlanetKitConferencePeer : ObjectiveC.NSObject {
   @objc final public let id: PlanetKit.PlanetKitUserId
@@ -1386,38 +1576,56 @@ extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitDataSessionControllable {
   @objc public var holdStatus: PlanetKit.PlanetKitHoldStatus {
     @objc get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var subgroupNames: [Swift.String]? {
     @objc get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var currentVideoSubgroupName: Swift.String? {
     @objc get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var currentScreenShareSubgroupName: Swift.String? {
     @objc get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var sharedContents: PlanetKit.PlanetKitSharedContents? {
     @objc get
   }
+  #endif
   @objc public var userEquipmentType: PlanetKit.PlanetKitUserEquipmentType {
     @objc get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var displayName: Swift.String? {
     @objc get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var sipLocalIP: Swift.String? {
     @objc get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var sipDeviceInfo: Swift.String? {
     @objc get
   }
+  #endif
   @objc public var userType: PlanetKit.PlanetKitUserTypeContainer {
     @objc get
   }
   @objc deinit
 }
 extension PlanetKit.PlanetKitConferencePeer {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func videoStatus(subgroupName: Swift.String?) throws -> PlanetKit.PlanetKitVideoStatus
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func screenShareStatus(subgroupName: Swift.String?) throws -> PlanetKit.PlanetKitScreenShareStatus
+  #endif
   @objc dynamic public func volumeLevelSetting() throws -> PlanetKit.PlanetKitVolumeLevel
 }
 @objc @_hasMissingDesignatedInitializers public class PlanetKitScreenShareStatus : ObjectiveC.NSObject {
@@ -1453,7 +1661,9 @@ extension PlanetKit.PlanetKitConferencePeer {
   case participantReserved4 = 20006
   case participantReserved5 = 20007
   case unknown = 99999
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -1466,13 +1676,17 @@ extension PlanetKit.PlanetKitUserType : Swift.CustomStringConvertible {
 }
 @objc @_hasMissingDesignatedInitializers public class PlanetKitUserTypeContainer : ObjectiveC.NSObject {
   final public let planetKitUserType: PlanetKit.PlanetKitUserType?
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var planetKitUserTypeValue: Foundation.NSNumber? {
     @objc get
   }
+  #endif
   final public let customUserType: Swift.Int?
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var customUserTypeValue: Foundation.NSNumber? {
     @objc get
   }
+  #endif
   @objc public var isPlanetKitUserType: Swift.Bool {
     @objc get
   }
@@ -1492,7 +1706,9 @@ extension PlanetKit.PlanetKitUserType : Swift.CustomStringConvertible {
   case speakerDeviceCannotBeSetWhileUsingCustomSpeaker = 5005
   case cameraDeviceCannotBeSetWhileUsingCustomCamera = 5006
   case unknown = 9999
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -1509,7 +1725,9 @@ extension PlanetKit.PlanetKitUserType : Swift.CustomStringConvertible {
   @objc final public let width: Swift.Int
   @objc final public let height: Swift.Int
   @objc final public let rotation: PlanetKit.PlanetKitVideoRotation
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  #endif
   @objc override dynamic public var description: Swift.String {
     @objc get
   }
@@ -1523,7 +1741,9 @@ extension PlanetKit.PlanetKitUserType : Swift.CustomStringConvertible {
   case scaleToFill = 0
   case scaleAspectFit = 1
   case scaleAspectFill = 2
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -1531,7 +1751,9 @@ extension PlanetKit.PlanetKitUserType : Swift.CustomStringConvertible {
 }
 @objc @frozen public enum PlanetKitRenderingPolicy : Swift.Int {
   case doubleBuffering
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -1546,7 +1768,9 @@ extension PlanetKit.PlanetKitRenderingPolicy : Swift.CustomStringConvertible {
   case auto
   case mirrored
   case unmirrored
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -1558,10 +1782,12 @@ extension PlanetKit.PlanetKitMirroredType : Swift.CustomStringConvertible {
   }
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @_Concurrency.MainActor @preconcurrency public class PlanetKitMTKView : MetalKit.MTKView {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc @_Concurrency.MainActor @preconcurrency weak public var drawDelegate: (any PlanetKit.PlanetKitMTKViewDelegate)? {
     @objc get
     @objc set
   }
+  #endif
   @objc @_Concurrency.MainActor @preconcurrency public var isFirstFrameDrawn: Swift.Bool {
     @objc get
   }
@@ -1578,8 +1804,12 @@ extension PlanetKit.PlanetKitMirroredType : Swift.CustomStringConvertible {
     @objc set
   }
   @objc @_Concurrency.MainActor @preconcurrency final public let renderingPolicy: PlanetKit.PlanetKitRenderingPolicy
+  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect, device: (any Metal.MTLDevice)?)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc @_Concurrency.MainActor @preconcurrency public init(frame: CoreFoundation.CGRect, device: (any Metal.MTLDevice)?, renderingPolicy: PlanetKit.PlanetKitRenderingPolicy)
+  #endif
   @objc deinit
   @objc @_Concurrency.MainActor @preconcurrency public func clear()
 }
@@ -1601,7 +1831,9 @@ extension PlanetKit.PlanetKitMTKView {
   @objc deinit
 }
 @objc public protocol PlanetKitScreenControllable : PlanetKit.PlanetKitFpsLimitUpdateDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc var currentDevice: PlanetKit.PlanetKitScreenCaptureDevice? { get }
+  #endif
   @objc var preferredFrameRate: PlanetKit.PlanetKitFrameRate { get set }
   @objc var isStart: Swift.Bool { get }
   @objc func start(device: PlanetKit.PlanetKitScreenCaptureDevice, completion: @escaping (Swift.Bool) -> Swift.Void)
@@ -1609,7 +1841,9 @@ extension PlanetKit.PlanetKitMTKView {
   @objc func change(device: PlanetKit.PlanetKitScreenCaptureDevice, completion: @escaping (Swift.Bool) -> Swift.Void)
   @objc func addInterruptReceiver(_ interruptReceiver: any PlanetKit.PlanetKitScreenInterruptDelegate)
   @objc func removeInterruptReceiver(_ interruptReceiver: any PlanetKit.PlanetKitScreenInterruptDelegate)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc weak var delegate: (any PlanetKit.PlanetKitVideoStreamDelegate)? { get set }
+  #endif
 }
 @objc public protocol PlanetKitScreenInterruptDelegate {
   @objc func scrDidInterruptCapture(_ device: PlanetKit.PlanetKitScreenCaptureDevice)
@@ -1618,20 +1852,24 @@ extension PlanetKit.PlanetKitMTKView {
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class PlanetKitScreen : ObjectiveC.NSObject {
   @objc public static var shared: PlanetKit.PlanetKitScreen
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc weak public var delegate: (any PlanetKit.PlanetKitVideoStreamDelegate)? {
     @objc get
     @objc set
   }
+  #endif
   @objc public var displays: [PlanetKit.PlanetKitScreenCaptureDisplay] {
     @objc get
   }
   @objc public var windows: [PlanetKit.PlanetKitScreenCaptureWindow] {
     @objc get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var currentDevice: PlanetKit.PlanetKitScreenCaptureDevice? {
     @objc get
     @objc set
   }
+  #endif
   @objc public var preferredFrameRate: PlanetKit.PlanetKitFrameRate {
     @objc get
     @objc set
@@ -1661,12 +1899,18 @@ extension PlanetKit.PlanetKitScreen {
 }
 @objc public protocol PlanetKitMyMediaStatusDelegate {
   @objc optional func didUpdateVideoStatus(_ myMediaStatus: PlanetKit.PlanetKitMyMediaStatus, status: PlanetKit.PlanetKitVideoStatus)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc optional func didUpdateVideoSubgroup(_ myMediaStatus: PlanetKit.PlanetKitMyMediaStatus, subgroupName: Swift.String?)
+  #endif
   @objc optional func didUpdateScreenShareState(_ myMediaStatus: PlanetKit.PlanetKitMyMediaStatus, state: PlanetKit.PlanetKitScreenShareState)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc optional func didUpdateScreenShareSubgroup(_ myMediaStatus: PlanetKit.PlanetKitMyMediaStatus, subgroupName: Swift.String?)
+  #endif
   @objc optional func didMuteMic(_ myMediaStatus: PlanetKit.PlanetKitMyMediaStatus)
   @objc optional func didUnmuteMic(_ myMediaStatus: PlanetKit.PlanetKitMyMediaStatus)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc optional func didUpdateAudioSubgroup(_ myMediaStatus: PlanetKit.PlanetKitMyMediaStatus, sentSubgroupName: Swift.String?, taggedSubgroupName: Swift.String?)
+  #endif
   @objc optional func didUpdateAudioDescription(_ myMediaStatus: PlanetKit.PlanetKitMyMediaStatus, description: PlanetKit.PlanetKitMyAudioDescription)
 }
 @_hasMissingDesignatedInitializers @objc public class PlanetKitMyMediaStatus : ObjectiveC.NSObject {
@@ -1680,18 +1924,26 @@ extension PlanetKit.PlanetKitScreen {
   @objc public var isMyAudioMuted: Swift.Bool {
     @objc get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var audioSubgroupName: Swift.String? {
     @objc get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var audioTaggedSubgroupName: Swift.String? {
     @objc get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var videoSubgroupName: Swift.String? {
     @objc get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var screenShareSubgroupName: Swift.String? {
     @objc get
   }
+  #endif
   @objc public func addHandler(_ delegate: any PlanetKit.PlanetKitMyMediaStatusDelegate, completion: @escaping (Swift.Bool) -> Swift.Void)
   @objc public func removeHandler(_ delegate: any PlanetKit.PlanetKitMyMediaStatusDelegate, completion: @escaping (Swift.Bool) -> Swift.Void)
 }
@@ -1723,7 +1975,9 @@ extension PlanetKit.PlanetKitConference {
   @objc public var data: Swift.String {
     get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public init?(data: Swift.String)
+  #endif
   @objc deinit
 }
 public typealias PlanetKitDataSessionStreamId = Swift.UInt32
@@ -1733,7 +1987,9 @@ public typealias PlanetKitDataSessionStreamId = Swift.UInt32
   case reliableBytes
   case unreliableBytes
   case unreliableMsg
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -1748,8 +2004,12 @@ extension PlanetKit.PlanetKitDataSessionType : Swift.CustomStringConvertible {
   @objc func makeOutboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId, type: PlanetKit.PlanetKitDataSessionType, delegate: any PlanetKit.PlanetKitOutboundDataSessionDelegate, completion: @escaping PlanetKit.PlanetKitOutboundDataSession.Completion)
   @objc func makeInboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId, delegate: any PlanetKit.PlanetKitInboundDataSessionDelegate, completion: @escaping PlanetKit.PlanetKitInboundDataSession.Completion)
   @objc func unsupportInboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc func getOutboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId) -> PlanetKit.PlanetKitOutboundDataSession?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc func getInboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId) -> PlanetKit.PlanetKitInboundDataSession?
+  #endif
 }
 @objc public protocol PlanetKitOutboundDataSessionDelegate {
   @objc func didClose(_ session: PlanetKit.PlanetKitOutboundDataSession, reason: PlanetKit.PlanetKitDataSessionClosedReason)
@@ -1762,7 +2022,9 @@ extension PlanetKit.PlanetKitDataSessionType : Swift.CustomStringConvertible {
   case alreadyExist = 4
   case invalidId = 5
   case invalidType = 6
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -1777,7 +2039,9 @@ extension PlanetKit.PlanetKitDataSessionFailReason : Swift.CustomStringConvertib
   case sessionEnd = 0
   case `internal` = 1
   case unsupported = 2
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -1801,13 +2065,17 @@ extension PlanetKit.PlanetKitDataSessionClosedReason : Swift.CustomStringConvert
   @objc public var peerId: PlanetKit.PlanetKitUserId? {
     get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var subgroupName: Swift.String? {
     @objc get
   }
+  #endif
   @objc weak public var delegate: (any PlanetKit.PlanetKitOutboundDataSessionDelegate)?
   public typealias Completion = (_ dataSession: PlanetKit.PlanetKitOutboundDataSession?, _ failReason: PlanetKit.PlanetKitDataSessionFailReason) -> Swift.Void
   @objc public func send(data: Foundation.Data, timestamp: Swift.UInt64) -> Swift.Bool
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public func changeDestination(streamId: PlanetKit.PlanetKitDataSessionStreamId, peerId: PlanetKit.PlanetKitUserId?, completion: @escaping (Swift.Bool) -> Swift.Void)
+  #endif
   @objc deinit
 }
 @objc public protocol PlanetKitInboundDataSessionDelegate {
@@ -1818,9 +2086,11 @@ extension PlanetKit.PlanetKitDataSessionClosedReason : Swift.CustomStringConvert
   @objc public var streamId: PlanetKit.PlanetKitDataSessionStreamId {
     get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var subgroupName: Swift.String? {
     @objc get
   }
+  #endif
   @objc public var type: PlanetKit.PlanetKitDataSessionType {
     @objc get
   }
@@ -1855,7 +2125,9 @@ extension PlanetKit.PlanetKitCall {
   case kitNoMetalDevice = 2005
   case kitInvalidAuthentication = 2006
   case kitInternalInitializationError = 2999
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -1868,15 +2140,19 @@ extension PlanetKit.PlanetKitStartFailReason : Swift.CustomStringConvertible {
 }
 @objc @_hasMissingDesignatedInitializers public class PlanetKitCameraManager : ObjectiveC.NSObject {
   @objc public static let shared: PlanetKit.PlanetKitCameraManager
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc weak public var delegate: (any PlanetKit.PlanetKitCameraDelegate)? {
     @objc get
     @objc set
   }
+  #endif
   @objc deinit
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var modifier: (any PlanetKit.PlanetKitVideoModifierDelegate)? {
     @objc get
     @objc set
   }
+  #endif
 }
 extension PlanetKit.PlanetKitCameraManager {
   @objc dynamic public func startPreview(delegate: any PlanetKit.PlanetKitVideoOutputDelegate)
@@ -1890,29 +2166,37 @@ extension PlanetKit.PlanetKitCameraManager {
   @objc dynamic public func videoOutput(_ videoBuffer: PlanetKit.PlanetKitVideoBuffer)
 }
 extension PlanetKit.PlanetKitCameraManager {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public var currentDeviceInfo: (any PlanetKit.PlanetKitVideoCaptureDeviceInfo)? {
     @objc get
   }
+  #endif
   @objc dynamic public var isStarted: Swift.Bool {
     @objc get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public var preset: PlanetKit.PlanetKitCameraPreset? {
     @objc get
   }
+  #endif
   @objc dynamic public var position: PlanetKit.PlanetKitCameraPosition {
     @objc get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public var frameRate: PlanetKit.PlanetKitFrameRate? {
     @objc get
   }
+  #endif
   @objc dynamic public func change(deviceInfo: any PlanetKit.PlanetKitVideoCaptureDeviceInfo) throws
 }
 extension PlanetKit.PlanetKitCameraManager {
+  #if compiler(>=5.3) && $NonescapableTypes
   @available(iOS 15.0, macOS 12.0, *)
   @objc dynamic public var virtualBackground: PlanetKit.PlanetKitVirtualBackground? {
     @objc get
     @objc set
   }
+  #endif
 }
 extension PlanetKit.PlanetKitCameraManager {
   @objc dynamic public var deviceInfos: [any PlanetKit.PlanetKitVideoCaptureDeviceInfo] {
@@ -1929,8 +2213,12 @@ extension PlanetKit.PlanetKitCameraManager {
 @_documentation(visibility: internal) extension PlanetKit.PlanetKitCameraManager : PlanetKit.PlanetKitCameraDelegate {
   @objc dynamic public func didStart(_ deviceInfo: any PlanetKit.PlanetKitVideoCaptureDeviceInfo)
   @objc dynamic public func didStop(_ deviceInfo: any PlanetKit.PlanetKitVideoCaptureDeviceInfo)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func didFail(_ error: Foundation.NSError, deviceInfo: (any PlanetKit.PlanetKitVideoCaptureDeviceInfo)?)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func didUpdate(_ deviceInfo: (any PlanetKit.PlanetKitVideoCaptureDeviceInfo)?)
+  #endif
 }
 @objc @_inheritsConvenienceInitializers public class PlanetKitSystem : ObjectiveC.NSObject {
   @objc public static let shared: PlanetKit.PlanetKitSystem
@@ -1947,7 +2235,9 @@ extension PlanetKit.PlanetKitCameraManager {
   @objc optional func didMuteMic(_ peerControl: PlanetKit.PlanetKitPeerControl)
   @objc optional func didUnmuteMic(_ peerControl: PlanetKit.PlanetKitPeerControl)
   @objc optional func didUpdateVideo(_ peerControl: PlanetKit.PlanetKitPeerControl, subgroup: PlanetKit.PlanetKitSubgroup, status: PlanetKit.PlanetKitVideoStatus)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc optional func didUpdateScreenShare(_ peerControl: PlanetKit.PlanetKitPeerControl, subgroup: PlanetKit.PlanetKitSubgroup, status: PlanetKit.PlanetKitScreenShareStatus, disabledReason: Foundation.NSNumber?)
+  #endif
   @objc optional func didSubscribeSubgroup(_ peerControl: PlanetKit.PlanetKitPeerControl, subgroup: PlanetKit.PlanetKitSubgroup)
   @objc optional func didUnsubscribeSubgroup(_ peerControl: PlanetKit.PlanetKitPeerControl, subgroup: PlanetKit.PlanetKitSubgroup)
   @objc optional func didHold(_ peerControl: PlanetKit.PlanetKitPeerControl, reason: Swift.String)
@@ -1962,12 +2252,18 @@ extension PlanetKit.PlanetKitCameraManager {
   @objc deinit
 }
 extension PlanetKit.PlanetKitPeerControl {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func startScreenShare(delegate: any PlanetKit.PlanetKitVideoOutputDelegate, subgroupName: Swift.String? = nil, completion: @escaping (Swift.Bool) -> Swift.Void)
+  #endif
   @objc dynamic public func stopScreenShare(completion: @escaping (Swift.Bool) -> Swift.Void)
 }
 extension PlanetKit.PlanetKitPeerControl {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func startVideo(maxResolution: PlanetKit.PlanetKitVideoResolution, delegate: any PlanetKit.PlanetKitVideoOutputDelegate, subgroupName: Swift.String? = nil, completion: @escaping (Swift.Bool) -> Swift.Void)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func startVideo(maxResolution: PlanetKit.PlanetKitVideoResolution, delegate: any PlanetKit.PlanetKitVideoOutputDelegate, subgroupName: Swift.String? = nil, resolution: @escaping (_ success: Swift.Bool, _ req: PlanetKit.PlanetKitVideoResolution, _ recv: PlanetKit.PlanetKitVideoResolution, _ failReason: Swift.String) -> Swift.Void)
+  #endif
   @objc dynamic public func stopVideo(completion: @escaping (Swift.Bool) -> Swift.Void)
   @objc dynamic public func setVolumeLevelSetting(_ volumeLevel: Swift.Int8, completion: @escaping (Swift.Bool) -> Swift.Void)
 }
@@ -1981,7 +2277,9 @@ extension PlanetKit.PlanetKitPeerControl {
   public var sampleSize: Swift.Int32 {
     get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -1994,17 +2292,23 @@ extension PlanetKit.PlanetKitPeerControl {
   public var floatValue: Swift.Float64 {
     get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
   }
 }
 @objc public protocol PlanetKitAudioMicCaptureDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc func didCapture(frameCnt: Swift.UInt32, channels: Swift.UInt32, sampleRate: Swift.UInt32, sampleType: PlanetKit.PlanetKitAudioSampleType, timestamp: CoreAudioTypes.AudioTimeStamp, outData: Swift.UnsafeMutableRawPointer!, outDataLen: Swift.UInt32)
+  #endif
 }
 @objc public protocol PlanetKitAudioSpkPlayDelegate {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc func willPlay(frameCnt: Swift.UInt32, channels: Swift.UInt32, sampleRate: Swift.UInt32, sampleType: PlanetKit.PlanetKitAudioSampleType, timestamp: CoreAudioTypes.AudioTimeStamp, playBuf: Swift.UnsafeMutableRawPointer!, playBufSize: Swift.UInt32) -> Swift.Int32
+  #endif
 }
 @objc @_hasMissingDesignatedInitializers public class PlanetKitPeerAudioDescription : ObjectiveC.NSObject {
   @objc final public let peerId: PlanetKit.PlanetKitUserId
@@ -2037,7 +2341,9 @@ extension PlanetKit.PlanetKitPeerControl {
   case builtInHandset
   case builtInSpeakerphone
   case externalHeadset
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -2054,7 +2360,9 @@ extension PlanetKit.PlanetKitAudioRoute : Swift.CustomStringConvertible {
 @objc @frozen public enum PlanetKitAudioDeviceType : Swift.Int {
   case mic
   case speaker
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -2092,12 +2400,16 @@ extension PlanetKit.PlanetKitConference {
   @objc public var isStarted: Swift.Bool {
     @objc get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var micDevice: PlanetKit.PlanetKitAudioDevice? {
     @objc get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var speakerDevice: PlanetKit.PlanetKitAudioDevice? {
     @objc get
   }
+  #endif
   @objc public var micVolume: Swift.Float {
     @objc get
   }
@@ -2105,25 +2417,35 @@ extension PlanetKit.PlanetKitConference {
     @objc get
   }
   @objc public func setVolume(_ volume: Swift.Float, for type: PlanetKit.PlanetKitAudioDeviceType)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public func change(micDevice: PlanetKit.PlanetKitAudioDevice?, completion: @escaping (Foundation.NSError?) -> Swift.Void)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public func change(speakerDevice: PlanetKit.PlanetKitAudioDevice?, completion: @escaping (Foundation.NSError?) -> Swift.Void)
+  #endif
   @objc public func setPreferredDefaultDevice(type: PlanetKit.PlanetKitAudioDeviceType)
   @objc public func addMicReceiver(_ micReceiver: any PlanetKit.PlanetKitAudioMicCaptureDelegate)
   @objc public func removeMicReceiver(_ micReceiver: any PlanetKit.PlanetKitAudioMicCaptureDelegate)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var micModifier: (any PlanetKit.PlanetKitAudioMicCaptureDelegate)? {
     @objc get
     @objc set
   }
+  #endif
   @objc public func addSpeakerReceiver(_ speakerReceiver: any PlanetKit.PlanetKitAudioSpkPlayDelegate)
   @objc public func removeSpeakerReceiver(_ speakerReceiver: any PlanetKit.PlanetKitAudioSpkPlayDelegate)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var speakerModifier: (any PlanetKit.PlanetKitAudioSpkPlayDelegate)? {
     @objc get
     @objc set
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var speakerVolumeReceiver: (any PlanetKit.PlanetKitAudioDeviceVolumeDelegate)? {
     @objc get
     @objc set
   }
+  #endif
   @objc public var speakerVolumeInterval: Foundation.TimeInterval {
     @objc get
     @objc set
@@ -2137,7 +2459,9 @@ extension PlanetKit.PlanetKitConference {
   case verified
   case connected
   case disconnected
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -2152,7 +2476,9 @@ extension PlanetKit.PlanetKitCallState : Swift.CustomStringConvertible {
   case unknown
   case outgoing
   case incoming
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -2207,30 +2533,42 @@ extension PlanetKit.PlanetKitCallDirection : Swift.CustomStringConvertible {
   @objc public var myScreenShareStream: PlanetKit.PlanetKitVideoStream {
     @objc get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var screen: (any PlanetKit.PlanetKitScreenControllable)? {
     @objc get
     @objc set
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc weak public var peerAudioDescriptionReceiver: (any PlanetKit.PlanetKitPeerAudioDescriptionDelegate)? {
     @objc get
     @objc set
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc weak public var myAudioDescriptionReceiver: (any PlanetKit.PlanetKitMyAudioDescriptionDelegate)? {
     @objc get
     @objc set
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc weak public var myScreenShareModifier: (any PlanetKit.PlanetKitVideoModifierDelegate)? {
     @objc get
     @objc set
   }
+  #endif
   @objc deinit
 }
 extension PlanetKit.PlanetKitCall {
-  @objc dynamic public func acceptCall(startMessage: PlanetKit.PlanetKitCallStartMessage?, useResponderPreparation: Swift.Bool, recordOnCloud: Swift.Bool = false, initialMyVideoState: PlanetKit.PlanetKitInitialMyVideoState = .resume)
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc dynamic public func acceptCall(startMessage: PlanetKit.PlanetKitCallStartMessage?, useResponderPreparation: Swift.Bool, recordOnCloud: Swift.Bool = false, initialMyVideoState: PlanetKit.PlanetKitInitialMyVideoState = .resume, initialMyAudioState: PlanetKit.PlanetKitInitialMyAudioState = .unmuted)
+  #endif
   @objc dynamic public func endCall()
   @objc dynamic public func endCall(normalUserReleaseCode: Swift.String)
   @objc dynamic public func endCall(errorUserReleaseCode: Swift.String)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func hold(reason: Swift.String?, completion: @escaping (Swift.Bool) -> Swift.Void)
+  #endif
   @objc dynamic public func unhold(completion: @escaping (Swift.Bool) -> Swift.Void)
 }
 extension PlanetKit.PlanetKitCall {
@@ -2276,7 +2614,9 @@ extension PlanetKit.PlanetKitCall {
 @objc @frozen public enum PlanetKitVideoHardwareStatus : Swift.Int {
   case available
   case noMetalDevice
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -2310,7 +2650,9 @@ extension PlanetKit.PlanetKitCall {
   case undefined
   case user
   case decline
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -2321,7 +2663,9 @@ extension PlanetKit.PlanetKitCall {
   @objc dynamic public func disableVideo(reason: PlanetKit.PlanetKitMediaDisableReason, completion: @escaping (Swift.Bool) -> Swift.Void)
 }
 @objc public protocol PlanetKitStatisticsControllable {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc var statistics: PlanetKit.PlanetKitStatistics? { get }
+  #endif
 }
 @objc @_hasMissingDesignatedInitializers public class PlanetKitStatistics : ObjectiveC.NSObject {
   @objc final public let myAudio: PlanetKit.PlanetKitStatistics.MyAudio
@@ -2372,15 +2716,21 @@ extension PlanetKit.PlanetKitStatistics {
     final public let jitterMs: Swift.UInt32?
     final public let latencyMs: Swift.UInt32?
     @objc final public let bps: Swift.UInt32
+    #if compiler(>=5.3) && $NonescapableTypes
     @objc public var lossRateInNumber: Foundation.NSNumber? {
       @objc get
     }
+    #endif
+    #if compiler(>=5.3) && $NonescapableTypes
     @objc public var jitterMsInNumber: Foundation.NSNumber? {
       @objc get
     }
+    #endif
+    #if compiler(>=5.3) && $NonescapableTypes
     @objc public var latencyMsInNumber: Foundation.NSNumber? {
       @objc get
     }
+    #endif
     @objc deinit
   }
   @objc @_hasMissingDesignatedInitializers public class Video : ObjectiveC.NSObject {
@@ -2394,7 +2744,9 @@ extension PlanetKit.PlanetKitStatistics {
   case none = 0
   case blur = 1
   case image = 2
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -2414,23 +2766,41 @@ extension PlanetKit.PlanetKitStatistics {
   @objc final public let country: Swift.String?
   @objc final public let uniqueId: Swift.String
   @objc public init(id: Swift.String, serviceId: Swift.String)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public init?(id: Swift.String, serviceId: Swift.String, country: Swift.String?)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public init?(string: Swift.String?)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc override dynamic public func isNotEqual(to object: Any?) -> Swift.Bool
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc override dynamic public func isGreaterThan(_ object: Any?) -> Swift.Bool
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc override dynamic public func isGreaterThanOrEqual(to object: Any?) -> Swift.Bool
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc override dynamic public func isLessThan(_ object: Any?) -> Swift.Bool
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc override dynamic public func isLessThanOrEqual(to object: Any?) -> Swift.Bool
+  #endif
   @objc override dynamic public var description: Swift.String {
     @objc get
   }
   @objc deinit
 }
 extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitStatisticsControllable {
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public var statistics: PlanetKit.PlanetKitStatistics? {
     @objc get
   }
+  #endif
 }
 @objc @_hasMissingDesignatedInitializers public class PlanetKitSubgroup : ObjectiveC.NSObject {
   @objc public var subgroupName: Swift.String? {
@@ -2442,14 +2812,20 @@ extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitStatisticsControlla
   @objc public var peers: [PlanetKit.PlanetKitConferencePeer] {
     @objc get
   }
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var state: PlanetKit.PlanetKitSubgroupState? {
     @objc get
   }
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public var attribute: PlanetKit.PlanetKitSubgroupAttribute? {
     @objc get
   }
+  #endif
   @objc public func isSubscribed(peerId: PlanetKit.PlanetKitUserId) -> Swift.Bool
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc public func getPeer(peerId: PlanetKit.PlanetKitUserId) -> PlanetKit.PlanetKitConferencePeer?
+  #endif
   @objc deinit
 }
 @objc @_hasMissingDesignatedInitializers public class PlanetKitSubgroupAttribute : ObjectiveC.NSObject {
@@ -2480,7 +2856,9 @@ extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitStatisticsControlla
   case none
   case `public`
   case `private`
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -2498,7 +2876,9 @@ extension PlanetKit.PlanetKitSubgroupPeerUpdateType : Swift.CustomStringConverti
   case overMaxSubgroupCount = 3
   case alreadySubscribed = 4
   case unknown = 1000
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -2516,7 +2896,9 @@ extension PlanetKit.PlanetKitSubgroupSubscribeFailReason : Swift.CustomStringCon
   case notSubscribed = 3
   case hasActiveScreenShare = 4
   case unknown = 1000
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -2532,7 +2914,9 @@ extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitAudioVolumeDelegate {
 }
 extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitAudioDeviceChangeDelegate {
   @objc dynamic public func didAudioDevicesUpdate(devices: [PlanetKit.PlanetKitAudioDevice])
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func didAudioDeviceChange(device: PlanetKit.PlanetKitAudioDevice?, type: PlanetKit.PlanetKitAudioDeviceType)
+  #endif
   @objc dynamic public func didAudioDeviceDataSourceChange(device: PlanetKit.PlanetKitAudioDevice, dataSource: Swift.UInt32)
 }
 extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitCameraDeviceChangeDelegate {
@@ -2547,7 +2931,9 @@ extension PlanetKit.PlanetKitCall : PlanetKit.PlanetKitCameraDeviceChangeDelegat
   case participant = 3
   case cloudServer = 4
   case appServer = 5
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -2603,7 +2989,9 @@ extension PlanetKit.PlanetKitDisconnectSource : Swift.CustomStringConvertible {
   case serviceIncompatiblePlanetKitVer = 1511
   case serviceTooManyRequests = 1512
   case unknown = -1
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -2632,7 +3020,9 @@ extension PlanetKit.PlanetKitConferenceExceptionType : Swift.CustomStringConvert
 @objc @frozen public enum PlanetKitRecordOnCloudDeactivateReason : Swift.Int {
   case `internal` = 0
   case activationFailed = 1
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -2646,13 +3036,31 @@ extension PlanetKit.PlanetKitRecordOnCloudDeactivateReason : Swift.CustomStringC
 @objc @frozen public enum PlanetKitInitialMyVideoState : Swift.Int {
   case resume
   case pause
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
   }
 }
 extension PlanetKit.PlanetKitInitialMyVideoState : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+@objc @frozen public enum PlanetKitInitialMyAudioState : Swift.Int {
+  case unmuted
+  case muted
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.Int)
+  #endif
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension PlanetKit.PlanetKitInitialMyAudioState : Swift.CustomStringConvertible {
   public var description: Swift.String {
     get
   }
@@ -2665,7 +3073,9 @@ extension PlanetKit.PlanetKitInitialMyVideoState : Swift.CustomStringConvertible
   case tooFrequent = 4
   case timeout = 5
   case internalError = 1000
+  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
+  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -2683,8 +3093,12 @@ extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitDataSessionControll
   @objc dynamic public func makeOutboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId, type: PlanetKit.PlanetKitDataSessionType, delegate: any PlanetKit.PlanetKitOutboundDataSessionDelegate, completion: @escaping PlanetKit.PlanetKitOutboundDataSession.Completion)
   @objc dynamic public func makeInboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId, delegate: any PlanetKit.PlanetKitInboundDataSessionDelegate, completion: @escaping PlanetKit.PlanetKitInboundDataSession.Completion)
   @objc dynamic public func unsupportInboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId)
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func getOutboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId) -> PlanetKit.PlanetKitOutboundDataSession?
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func getInboundDataSession(streamId: PlanetKit.PlanetKitDataSessionStreamId) -> PlanetKit.PlanetKitInboundDataSession?
+  #endif
 }
 @_inheritsConvenienceInitializers @objc open class PlanetKitCustomSpeaker : ObjectiveC.NSObject {
   @objc public func playAudio(audioBuffer: PlanetKit.PlanetKitAudioBuffer) -> Swift.Int32
@@ -2705,8 +3119,12 @@ extension PlanetKit.PlanetKitConference : PlanetKit.PlanetKitDataSessionControll
 }
 @objc public protocol PlanetKitAudioDeviceChangeDelegate {
   @objc func didAudioDevicesUpdate(devices: [PlanetKit.PlanetKitAudioDevice])
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc func didAudioDeviceChange(device: PlanetKit.PlanetKitAudioDevice?, type: PlanetKit.PlanetKitAudioDeviceType)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
   @objc optional func didAudioDefaultSystemDeviceChange(device: PlanetKit.PlanetKitAudioDevice?, type: PlanetKit.PlanetKitAudioDeviceType)
+  #endif
   @objc optional func didAudioDeviceDataSourceChange(device: PlanetKit.PlanetKitAudioDevice, dataSource: Swift.UInt32)
 }
 extension PlanetKit.PlanetKitAudioManager {
@@ -2967,6 +3385,11 @@ extension PlanetKit.PlanetKitInitialMyVideoState : Swift.Hashable {}
 extension PlanetKit.PlanetKitInitialMyVideoState : Swift.RawRepresentable {}
 extension PlanetKit.PlanetKitInitialMyVideoState : Swift.Sendable {}
 extension PlanetKit.PlanetKitInitialMyVideoState : Swift.BitwiseCopyable {}
+extension PlanetKit.PlanetKitInitialMyAudioState : Swift.Equatable {}
+extension PlanetKit.PlanetKitInitialMyAudioState : Swift.Hashable {}
+extension PlanetKit.PlanetKitInitialMyAudioState : Swift.RawRepresentable {}
+extension PlanetKit.PlanetKitInitialMyAudioState : Swift.Sendable {}
+extension PlanetKit.PlanetKitInitialMyAudioState : Swift.BitwiseCopyable {}
 extension PlanetKit.PlanetKitSendShortDataFailReason : Swift.Equatable {}
 extension PlanetKit.PlanetKitSendShortDataFailReason : Swift.Hashable {}
 extension PlanetKit.PlanetKitSendShortDataFailReason : Swift.RawRepresentable {}
