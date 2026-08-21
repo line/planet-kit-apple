@@ -37,7 +37,7 @@ platform :ios, '13.0'
 use_frameworks!
  
 target 'MyApp' do
-  pod 'PlanetKit-SDK-Apple', '~> 6.2', :source => 'https://github.com/line/planet-kit-cocoapods-specs.git'
+  pod 'PlanetKit-SDK-Apple', '~> 7.1', :source => 'https://github.com/line/planet-kit-cocoapods-specs.git'
 end
 ```
 
@@ -50,8 +50,8 @@ $ pod install
 ## API Reference
 For detailed information on APIs, please refer to the following documents.
 
-* [iOS API Reference](https://docs.lineplanet.me/api-reference/client/ios/6.2/documentation/planetkit)
-* [macOS API Reference](https://docs.lineplanet.me/api-reference/client/macos/6.2/documentation/planetkit)
+* [iOS API Reference](https://docs.lineplanet.me/api-reference/client/ios/latest/index.html)
+* [macOS API Reference](https://docs.lineplanet.me/api-reference/client/macos/latest/index.html)
 
 ## Issues and Inquiries
 Please file any issues or inquiries you have to our representative or dl_planet_help@linecorp.com.
